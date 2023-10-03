@@ -7,7 +7,7 @@ export default function SideItem({icon, msg, active, index, tamanio, path}) {
      const [ruta, setRuta] = useState(path)
      const navigate = useNavigate()
      const loc = useLocation()
-    const {token, setToken} = useContext(AppContext)
+    const {token, setToken, setRole} = useContext(AppContext)
     return (
     <>
     <Link
@@ -28,7 +28,10 @@ export default function SideItem({icon, msg, active, index, tamanio, path}) {
         onClick={()=>{
             if(index===10000){
                 setToken(localStorage.removeItem("token"))
+                //localStorage.removeItem("role")
+                //localStorage.removeItem("username")
                 localStorage.removeItem("token")
+                setRole(null)
                 navigate("/")
             } 
         }} 

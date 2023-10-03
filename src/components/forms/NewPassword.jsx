@@ -9,8 +9,9 @@ import {
   import { Formik, Field, Form } from "formik";
   import toast, { Toaster } from "react-hot-toast";
   import CardLogo from "../pure/CardLogo";
-  import React from "react";
+  import React, {useEffect} from "react";
   import { useLocation, useRoute } from "wouter";
+  import { useParams, useNavigate } from "react-router-dom";
 import axiosApi from "../../utils/config/axios.config";
   
   export default function NewPassword() {
@@ -18,9 +19,13 @@ import axiosApi from "../../utils/config/axios.config";
       password: "",
       passwordR: "",
     };
+  
+   
+    //const [match, params] = useRoute("/newPassword/:id/:token")
+    const {id, token} = useParams()
+    const navigate = useNavigate()
+    //const [loc, setLoc] = useLocation()
 
-    const [match, params] = useRoute("/newPassword/:id/:token")
-    const [loc, setLoc] = useLocation()
   const actualizarContrasenia = async (user_id, resetString, newPassword) =>{
     let body={
       user_id:user_id,
@@ -35,11 +40,11 @@ import axiosApi from "../../utils/config/axios.config";
 
     if(response.status === 200 ){
       toast.success(response.data.message)
-      setLoc("/")
+      navigate("/")
     }
     console.log(response)
   }
-  
+     
 
     const validationSchema = Yup.object().shape({
       password: Yup.string()
@@ -58,7 +63,7 @@ import axiosApi from "../../utils/config/axios.config";
           validationSchema={validationSchema}
           enableReinitialize={true}
           onSubmit={(values) => {
-            actualizarContrasenia(params.id,params.token,values.passwordR)
+            actualizarContrasenia(id,token,values.passwordR)
           }}
         >
           {(props) => {

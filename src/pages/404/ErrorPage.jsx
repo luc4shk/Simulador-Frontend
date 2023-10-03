@@ -1,13 +1,22 @@
 import { Box, Button, Flex, Text } from '@chakra-ui/react'
-import { Link } from 'wouter'
+import { Link } from 'react-router-dom'
 import React from 'react'
 
-export default function ErrorPage() {
+export default function ErrorPage({role}) {
+
+    const redirectTo = () => {
+    if (role === 'Administrador') {
+      return '/home'; // Redirige al panel de administrador
+    } else if (role === 'Estudiante') {
+      return '/user'; // Redirige al panel de estudiante
+    } else {
+      return '/'; // Redirige a la página de inicio por defecto
+    }
+  };
+
   return (
     <Flex
-      // w={isOpen ? "100%" : ["calc(100% - 70px)","calc(100% - 70px)","calc(100% - 200px)"]}
       minHeight={"100vh"}
-      // left={isOpen ? "0px" : ["70px","70px","200px"]}
       position={"relative"}
       transition={"all 0.5s"}
       flexDir={"column"}
@@ -15,7 +24,7 @@ export default function ErrorPage() {
       >
       <Flex position={"relative"} w={"100%"} h={"100%"}>
       <Text>404 Error</Text>
-      <Button as={Link} to="/">Go to Home</Button>
+        <Button as={Link} to={redirectTo()}>Go to Home</Button>
     </Flex>
     </Flex>
     

@@ -81,9 +81,9 @@ export default function FormularioPrueba() {
   };
 
   useEffect(() => {
-     {toast("Este apartado no se encuentra funcional actualmente, tiene la libertad de probar el formulario, en su defecto contamos con pruebas ya creadas, gracias.", {
+    {toast("Este apartado no se encuentra funcional actualmente, tiene la libertad de probar el formulario, en su defecto contamos con pruebas ya creadas, gracias.", {
       icon: '⚠️',
-      });}
+    });}
 
     obtenerCompetencias();
   },[]);
@@ -111,7 +111,7 @@ export default function FormularioPrueba() {
     ),
   });
 
- 
+
   if (loading) {
     return <div>Cargando...</div>;
   }
@@ -240,69 +240,69 @@ export default function FormularioPrueba() {
                   direction="row"
                 >
                   {competencias &&
-                    competencias.map((compe, index) => (
-                      <Checkbox
-                        onChange={(e) => {
-                          const checked = e.target.checked;
-                          if (checked) {
-                            obtenerCategoriasPorCompetencia(compe.id);
-                          } else {
-                            setSeleccionadas(
-                              seleccionadas.filter(
-                                (item) => item.nombre !== compe.nombre
-                              )
-                            );
-                          }
-                          setLoading2(false);
-                        }}
-                        key={index}
-                        colorScheme="cyan"
-                        value={compe.id}
-                      >
-                        {compe.nombre}
-                      </Checkbox>
-                    ))}
+                      competencias.map((compe, index) => (
+                        <Checkbox
+                          onChange={(e) => {
+                            const checked = e.target.checked;
+                            if (checked) {
+                              obtenerCategoriasPorCompetencia(compe.id);
+                            } else {
+                              setSeleccionadas(
+                                seleccionadas.filter(
+                                  (item) => item.nombre !== compe.nombre
+                                )
+                              );
+                            }
+                            setLoading2(false);
+                          }}
+                          key={index}
+                          colorScheme="cyan"
+                          value={compe.id}
+                        >
+                          {compe.nombre}
+                        </Checkbox>
+                      ))}
                 </Field>
 
                 <FormErrorMessage>{errors.competencias}</FormErrorMessage>
               </FormControl>
               {seleccionadas &&
-              
-                seleccionadas.map((categoria, index) =>{
+
+                  seleccionadas.map((categoria, index) =>{
 
 
-                  return(
-                  categoria.categorias.map((item, subIndex) => {
-                     
-                       
-                    
-                    return (
-                      <Flex
-                        mt={"20px"}
-                        gap={"20px"}
-                        flexDir={["column", "column", "row"]}
-                      >
-                        <h2>
-                          {item.nombre} {item.id}
-                        </h2>
-                        <Input
-                          id="numeroPreguntas"
-                          name="numeroPreguntas"
-                          onChange={(e) => {
-                            handleFormChange(index, e);
-                          }}
-                        ></Input>
-                        <Input
-                          id="valor"
-                          name="valor"
-                          onChange={(e) => {
-                            handleFormChange(index, e);
-                          }}
-                        ></Input>
-                      </Flex>
-                    );
-                  })
-  )})}
+                    return(
+                      categoria.categorias.map((item, subIndex) => {
+
+
+
+                        return (
+                          <Flex
+                            mt={"20px"}
+                            gap={"20px"}
+                            flexDir={["column", "column", "row"]}
+                          >
+                            <h2>
+                              {item.nombre} {item.id}
+                            </h2>
+                            <Input
+                              id="numeroPreguntas"
+                              name="numeroPreguntas"
+                              onChange={(e) => {
+                                handleFormChange(index, e);
+                              }}
+                            ></Input>
+                            <Input
+                              id="valor"
+                              name="valor"
+                              onChange={(e) => {
+                                handleFormChange(index, e);
+                              }}
+                            ></Input>
+                          </Flex>
+                        );
+                      })
+                    )})}
 
               <Button
                 bgColor={"principal.100"}

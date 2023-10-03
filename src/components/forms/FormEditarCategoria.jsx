@@ -7,10 +7,12 @@ import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/react";
 import Boton from "../pure/Boton";
 import { toast, Toaster } from "react-hot-toast";
 import axiosApi from "../../utils/config/axios.config";
+import { useParams } from "react-router-dom";
 import { AppContext } from "../context/AppProvider";
 
 export default function FormularioEditarCategoria() {
   const [match, params] = useRoute("/editarCategoria/:id");
+  const {id} = useParams()
   const { token } = useContext(AppContext);
   const [datos, setDatos] = useState({});
   const [loading, setLoading] = useState(true);
@@ -108,8 +110,10 @@ export default function FormularioEditarCategoria() {
 
   useEffect(() => {
     if (competencias && competencias.length > 0) {
-      getCategoriaById(params.id);
+      //getCategoriaById(params.id);
+      getCategoriaById(id);
     }
+    console.log(id)
   }, [competencias]);
 
 
@@ -138,7 +142,8 @@ export default function FormularioEditarCategoria() {
                 descripcion,
                 competencia,
                 estado,
-                params.id
+                //params.id
+                id
               );
             }}
           >

@@ -1,15 +1,13 @@
-import {React, useState, useRef, useContext, useEffect} from "react";
+import {React, useRef, useContext} from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import axiosApi from "../../utils/config/axios.config";
 import { AppContext } from "../context/AppProvider";
 import { Box, FormControl, Input, Image, Button, Flex, FormErrorMessage } from "@chakra-ui/react";
-import { useLocation } from "wouter";
 import { toast } from "react-hot-toast";
 export default function Formularioavatar() {
-  const {token, setToken,imagen, setImagen, user} = useContext(AppContext)
+  const {token,imagen, setImagen} = useContext(AppContext)
   const inputRef = useRef()
-  const [loc, navigation] = useLocation()
   const initialValues = {
     avatar: null,
   };
@@ -28,16 +26,11 @@ const actualizaravatar = async (file) =>{
 
   if(response.status === 200){
     toast.success("Imagen actualizada correctamente")
+    localStorage.setItem("imagen",`${response.data.imageFile}?${Date.now()}`)
+    setImagen(`${response.data.imageFile}?${Date.now()}`)
   }
-  "" 
-  localStorage.setItem("imagen",response.data.imageFile)
-  setImagen(localStorage.getItem("imagen"))
-
-  const time = setTimeout(()=>{
-  window.location.reload()
-  },2000)
-  // navigation("/home")
 }
+
 
 
 
@@ -75,6 +68,7 @@ const validationSchema = Yup.object().shape({
           borderRadius="50%"
           objectFit="cover"
           objectPosition="center"
+          cache-control="no-cache"
         />
       </Flex>
 

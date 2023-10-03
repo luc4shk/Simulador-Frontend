@@ -14,12 +14,12 @@ import { useState, useRef, useContext, useEffect } from "react";
 import axiosApi from "../../utils/config/axios.config";
 import { AppContext } from "../context/AppProvider";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { useLocation } from "wouter";
 
 export default function FormularioConvocatoria() {
   const inputRef = useRef();
-  const [loc, setLoc] = useLocation();
+  const navigate = useNavigate();
   const [pruebas, setPruebas] = useState();
 
   const { token } = useContext(AppContext);
@@ -73,13 +73,13 @@ export default function FormularioConvocatoria() {
         toast.error(e.response.data.error);
       })
       .finally(() => {
-        setLoc("/convocatorias");
+        navigate("/convocatorias");
       });
 
     if (response.status === 200) {
       toast.success("¡Convocatoria agregada correctamente!");
     }
-    setLoc("/convocatorias")
+    navigate("/convocatorias")
   };
 
   const validationSchema = Yup.object().shape({

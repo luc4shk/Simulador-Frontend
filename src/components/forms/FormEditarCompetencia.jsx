@@ -10,6 +10,7 @@ import {
   FormErrorMessage
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
+import { useParams } from "react-router-dom";
 import * as Yup from "yup";
 import { useLocation, useRoute } from "wouter";
 import { AppContext } from "../context/AppProvider";
@@ -17,7 +18,7 @@ import axiosApi from "../../utils/config/axios.config";
 import { toast, Toaster } from "react-hot-toast";
 
 export default function FormularioEditarCompetencia() {
-  const [match, params] = useRoute('/editarCompetencia/:id');
+  const {id} = useParams()
   const { token } = useContext(AppContext);
   const [datos, setDatos] = useState();
   const [loading, setLoading] = useState(true);
@@ -69,7 +70,7 @@ export default function FormularioEditarCompetencia() {
   };
 
   useEffect(() => {
-    obtenerCompetenciaPorId(params.id);
+    obtenerCompetenciaPorId(id);
   }, []);
 
   const estados = ["Activo", "Inactivo"];
@@ -101,7 +102,7 @@ export default function FormularioEditarCompetencia() {
             validationSchema={validationSchema}
             onSubmit={({ nombre, descripcion, estado }, { setFieldValue }) => {
               const estadoValue = estado === "true";
-              actualizarCompetencia(nombre, descripcion, estadoValue, params.id);
+              actualizarCompetencia(nombre, descripcion, estadoValue, id);
               setFieldValue("estado", estadoValue);
             }}
           >

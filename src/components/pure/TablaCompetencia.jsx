@@ -14,12 +14,13 @@ import {
   Switch,
   FormLabel,
 } from "@chakra-ui/react";
-import { Link} from "wouter";
+import { Link } from "react-router-dom";
 import Boton from "./Boton";
 import { MdAdd, MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
 import { AppContext } from "../context/AppProvider";
 import axiosApi from "../../utils/config/axios.config";
+import Btn from "./Btn";
 export default function TablaCompetencia({ columns, items, path, msg, showButton }) {
   const [currentPage, setCurrentPage] = useState(0);
   const [indexI, setIndexI] = useState(0);
@@ -82,14 +83,23 @@ export default function TablaCompetencia({ columns, items, path, msg, showButton
     <div>
       {showButton && (
         <Flex align={"center"} flexDir={["column", "column", "row"]} gap={"15px"} justifyContent={"space-between"}>
-        <Boton
+        {/* <Boton
           msg={msg}
           leftIcon={<MdAdd />}
           as={"link"}
           path={path}
           w={["100%", "250px"]}
           radius={"8px"}
-        />
+        /> */}
+        <Btn
+          msg={"Agregar Competencia"}
+          leftIcon={<MdAdd/>}
+          isSubmit={false}
+          w={["100%", "250px"]}
+          path={"/formularioCompetencia"}
+        >
+          
+        </Btn>
         <Flex align={"center"} gap={"5px"}>
         <FormLabel id="switch" m={"0"}>Mostrar Inactivos</FormLabel> 
         <Switch id="switch" colorScheme="cyan"  onChange={(e)=>{

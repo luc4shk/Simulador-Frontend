@@ -13,12 +13,13 @@ import {
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useLocation, useRoute } from "wouter";
+import { useParams } from "react-router-dom";
 import { AppContext } from "../context/AppProvider";
 import axiosApi from "../../utils/config/axios.config";
 import { toast, Toaster } from "react-hot-toast";
 
 export default function FormEditarEstudiante() {
-  const [match,params] = useRoute('/editarEstudiante/:id');
+  const {id} = useParams()
   const { token } = useContext(AppContext);
   const [datos, setDatos] = useState();
   const [loading, setLoading] = useState(true);
@@ -79,7 +80,7 @@ export default function FormEditarEstudiante() {
 
 
   useEffect(() => {
-    getEstudianteById(params.id)
+    getEstudianteById(id)
   }, []);
 
 
@@ -113,7 +114,7 @@ export default function FormEditarEstudiante() {
               const estadoValue = estado === "true";
             //   actualizarCompetencia(nombre,c);
             //   setFieldValue("estado", estadoValue);
-              actualizarEstudiante(nombre,apellido,codigo,email,semestre,estadoValue,params.id)
+              actualizarEstudiante(nombre,apellido,codigo,email,semestre,estadoValue,id)
             }}
           >
             {(props) => {

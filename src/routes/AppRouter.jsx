@@ -34,13 +34,16 @@ import NewPassword from "../components/forms/NewPassword";
 import ProtectedRoute from "./ProtectedRoute";
 import Layout from "../components/container/Layout";
 export default function AppRouter() {
-  const { token } = useContext(AppContext);
+
+  const { token, user, role} = useContext(AppContext);
+
+
 
   return (
     <>
       <Router>
         <Routes>
-          <Route element={<ProtectedRoute isValid={true}>
+          <Route element={<ProtectedRoute redirectTo="/user" isValid={role &&role==="director"}>
               <Layout/>
             </ProtectedRoute>}>
             <Route path="/home" element={<PrincipalPage/>}/>
@@ -89,13 +92,37 @@ export default function AppRouter() {
             <Route path="/editarConvocatoria/:id" element={<EditarConvocatoria/>}>
             </Route>
           </Route>
+
+         
+           <Route element={<ProtectedRoute redirectTo={"/home"} isValid={role && role==="estudiante"}>
+            {//<Layout/>
+            }
+          </ProtectedRoute>}>
+
+            <Route path="/user" element={
+              <>
+                <div>
+                  Hola, user main
+                </div>
+                </>
+            }/>
+            <Route path="/puntaje" element={
+              <>
+                <div>
+                  Hola, user main, sección puntaje
+                </div>
+                </>
+            }/>
+          </Route>
+
+
           <Route path="/newPassword/:id/:token" element={<NewPassword/>}>
           </Route>
           <Route path="/" element={<Login/>}>
           </Route>
           <Route path="/recuperarEmail" element={<EmailRecuperación/>}>
           </Route>
-          <Route element={ErrorPage} />
+          <Route path="*" element={<ErrorPage role={role}/>} />
         </Routes>
       </Router>
       <Toaster reverseOrder={true} />

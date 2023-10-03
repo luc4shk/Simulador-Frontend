@@ -20,6 +20,7 @@ import { AppContext } from "../context/AppProvider";
 import { toast } from "react-hot-toast";
 import { RiEdit2Fill } from "react-icons/ri";
 import { MdAdd, MdChevronLeft, MdChevronRight } from "react-icons/md";
+import Btn from "./Btn";
 
 export default function TablaConvocatoria({ columns, items, path, msg, showButton }) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -85,13 +86,11 @@ export default function TablaConvocatoria({ columns, items, path, msg, showButto
   return (
     <div>
       {showButton && (
-        <Boton
+        <Btn
           msg={msg}
           leftIcon={<MdAdd />}
-          as={"link"}
           path={path}
           w={["100%", "250px"]}
-          radius={"8px"}
         />
       )}
       <Box mb="15px" mt="20px" p="20px" borderRadius="8px" bgColor="white">

@@ -19,6 +19,7 @@ import { MdAdd, MdChevronLeft, MdChevronRight } from "react-icons/md";
 import axiosApi from "../../utils/config/axios.config";
 import { AppContext } from "../context/AppProvider";
 import { RiEdit2Fill } from "react-icons/ri";
+import Btn from "./Btn";
 
 export default function TablaPrueba({ columns, items, path, msg, showButton }) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -82,14 +83,23 @@ export default function TablaPrueba({ columns, items, path, msg, showButton }) {
   return (
     <div>
       {showButton && (
-        <Boton
+        // <Boton
+        //   msg={msg}
+        //   leftIcon={<MdAdd />}
+        //   as={"link"}
+        //   path={path}
+        //   w={["100%", "250px"]}
+        //   radius={"8px"}
+        // />
+        <Btn
           msg={msg}
-          leftIcon={<MdAdd />}
-          as={"link"}
+          leftIcon={<MdAdd/>}
           path={path}
           w={["100%", "250px"]}
-          radius={"8px"}
-        />
+
+        >
+
+        </Btn>
       )}
       <Box mb="15px" mt="20px" p="20px" borderRadius="8px" bgColor="white">
         <Flex

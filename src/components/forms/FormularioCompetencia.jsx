@@ -9,7 +9,7 @@ import { AppContext } from "../context/AppProvider";
 import { toast, Toaster } from "react-hot-toast";
 export default function FormularioCompetencia() {
 
-  
+
   const {token,user} = useContext(AppContext)
   const [loc, setLoc] = useLocation()
   const AgregarCompetencia = async (nombre, descripcion) =>{
@@ -19,8 +19,8 @@ export default function FormularioCompetencia() {
     }
     let response = await axiosApi.post("api/competencia/create",body,{
       headers:{
-      "Content-Type": "application/json",
-       Authorization:"Bearer " + token
+        "Content-Type": "application/json",
+        Authorization:"Bearer " + token
       }
     }).catch((e)=>{
       toast.error(e.response.data.error)
@@ -33,20 +33,20 @@ export default function FormularioCompetencia() {
     if(response.status === 200){
       toast.success("¡Competencia Creada!")
     }
-    
+
   }
 
-    const initialValues = {
-      nombre: "",
-      descripcion: "",
-    }
+  const initialValues = {
+    nombre: "",
+    descripcion: "",
+  }
 
-    const validationSchema= Yup.object().shape(
-      {
-         nombre: Yup.string().required("El nombre es requerido").min(5,"Minimo 5 caracteres").max(25,"Maximo 25 caracteres"),
-        descripcion: Yup.string().required("La descripción es requerida").min(10,"Minimo 10 caracteres").max(200,"Máximo 200 caracteres"),
-      }
-    )
+  const validationSchema= Yup.object().shape(
+    {
+      nombre: Yup.string().required("El nombre es requerido").min(5,"Minimo 5 caracteres").max(25,"Maximo 25 caracteres"),
+      descripcion: Yup.string().required("La descripción es requerida").min(10,"Minimo 10 caracteres").max(200,"Máximo 200 caracteres"),
+    }
+  )
 
   return (
     <Box position="fixed">
@@ -110,9 +110,9 @@ export default function FormularioCompetencia() {
                     </FormControl>
                   </Box>
                   <Button
-                   bgColor={"principal.100"}
-                      _hover={{backgroundColor:"fondo.100"}}
-                      color={"white"}
+                    bgColor={"principal.100"}
+                    _hover={{backgroundColor:"fondo.100"}}
+                    color={"white"}
                     w={["200px", "300px", "350px", "400px"]}
                     mt={"30px"}
                     type="submit"
@@ -123,8 +123,8 @@ export default function FormularioCompetencia() {
           </Formik>
         </Box>
       </Center>
-      
+
     </Box>
   );
 }
- 
+

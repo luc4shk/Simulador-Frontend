@@ -14,6 +14,7 @@ import {
 import { Formik, Field, Form } from "formik";
 import { React, useContext, useEffect, useRef, useState } from "react";
 import { Link, useRoute, useLocation } from "wouter";
+import { useParams } from "react-router-dom";
 import * as Yup from "yup";
 import Boton from "../pure/Boton";
 import { toast } from "react-hot-toast";
@@ -23,7 +24,7 @@ import { BiObjectsVerticalCenter } from "react-icons/bi";
 import axios from "axios";
 
 export default function FormEditarPregunta() {
-  const [match, params] = useRoute("/editarPregunta/:id");
+  const {id} = useParams()
   const { token } = useContext(AppContext);
   const [imagen, setImagen] = useState()
   const [initialValues, setInitialValues] = useState();
@@ -145,7 +146,7 @@ export default function FormEditarPregunta() {
 
     useEffect(() => {
     if (categorias && categorias.length > 0) {
-      obtenerPreguntaPorId(params.id);
+      obtenerPreguntaPorId(id);
     }
   }, [categorias]);
 
@@ -167,7 +168,7 @@ export default function FormEditarPregunta() {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={({enunciado, semestre,respuesta,estado,categoria,opcionA,opcionB,opcionC,opcionD})=>{
-              actualizarPregunta(params.id,inputRef.current.files[0],enunciado,semestre,opcionA,opcionB,opcionC,opcionD,respuesta,categoria,estado)
+              actualizarPregunta(id,inputRef.current.files[0],enunciado,semestre,opcionA,opcionB,opcionC,opcionD,respuesta,categoria,estado)
             }}
           >
             {(props) => {

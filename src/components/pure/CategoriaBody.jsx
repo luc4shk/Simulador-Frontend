@@ -6,6 +6,7 @@ import TablaCategoria from "./TablaCategoria";
 import axiosApi from "../../utils/config/axios.config";
 import { AppContext } from "../context/AppProvider";
 import { Toaster, toast } from "react-hot-toast";
+import TablaComponent from "./TablaComponent";
 
 export default function CategoriaBody() {
   const {token} = useContext(AppContext)
@@ -108,7 +109,7 @@ export default function CategoriaBody() {
   ];
   return (
    <> 
-    {
+     {
       categorias ? 
       <TablaCategoria
       columns={columns}
@@ -118,7 +119,11 @@ export default function CategoriaBody() {
       showButton={true}
     />:
     <div>Cargando...</div>
-    }
+     }
+     {/*
+      <TablaComponent
+         tituloColumnas={columns}/>
+         */}
     
     
     </>

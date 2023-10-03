@@ -14,7 +14,7 @@ import {
   useEditable,
   FormLabel
 } from "@chakra-ui/react";
-import { Link } from "wouter";
+import { Link } from "react-router-dom";
 import Boton from "../pure/Boton";
 import { MdAdd, MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";

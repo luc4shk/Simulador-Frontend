@@ -14,7 +14,7 @@ import {
   FormLabel,
   Switch
 } from "@chakra-ui/react";
-import { Link } from "wouter";
+import { Link } from "react-router-dom";
 import Boton from "../pure/Boton";
 import { AppContext } from "../context/AppProvider";
 import axiosApi from "../../utils/config/axios.config";
