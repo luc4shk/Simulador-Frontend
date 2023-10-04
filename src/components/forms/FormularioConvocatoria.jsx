@@ -73,13 +73,13 @@ export default function FormularioConvocatoria() {
         toast.error(e.response.data.error);
       })
       .finally(() => {
-        navigate("/convocatorias");
+ //       navigate("/convocatorias");
       });
 
     if (response.status === 200) {
       toast.success("¡Convocatoria agregada correctamente!");
     }
-    navigate("/convocatorias")
+//    navigate("/convocatorias")
   };
 
   const validationSchema = Yup.object().shape({
@@ -124,6 +124,13 @@ export default function FormularioConvocatoria() {
           }}
           validationSchema={validationSchema}
           onSubmit={({nombre,descripcion,fecha_inicio,fecha_fin,prueba_id}) => {
+            console.log({
+              nombre,
+              descripcion,
+              fecha_inicio,
+              fecha_fin,
+              prueba_id
+            })
             agregarConvocatoria(nombre,descripcion,fecha_inicio,fecha_fin,prueba_id,inputRef.current.files[0])
           }}
         >

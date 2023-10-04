@@ -1,17 +1,18 @@
 import { Box, Button, Center, Input, Textarea, FormControl, FormErrorMessage } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import {React, useContext} from "react";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import Boton from "../pure/Boton";
 import * as Yup from "yup"
 import axiosApi from "../../utils/config/axios.config";
 import { AppContext } from "../context/AppProvider";
 import { toast, Toaster } from "react-hot-toast";
+import Btn from "../pure/Btn";
 export default function FormularioCompetencia() {
 
 
   const {token,user} = useContext(AppContext)
-  const [loc, setLoc] = useLocation()
+  const navigate = useNavigate()
   const AgregarCompetencia = async (nombre, descripcion) =>{
     let body={
       nombre:nombre,
@@ -24,14 +25,11 @@ export default function FormularioCompetencia() {
       }
     }).catch((e)=>{
       toast.error(e.response.data.error)
-    }).finally(
-      ()=>{
-        setLoc("/competencias")
-      }
-    )
+    })
 
     if(response.status === 200){
       toast.success("¡Competencia Creada!")
+      navigate("/competencias")
     }
 
   }
@@ -57,6 +55,7 @@ export default function FormularioCompetencia() {
           bgColor="white"
           minW={["150px", "250px", "480px", "550px"]}
           overflow="hidden"
+          boxShadow={"rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;"}
         >
           <Formik
             initialValues={initialValues}
@@ -109,14 +108,12 @@ export default function FormularioCompetencia() {
                       <FormErrorMessage>{errors.descripcion}</FormErrorMessage>
                     </FormControl>
                   </Box>
-                  <Button
-                    bgColor={"principal.100"}
-                    _hover={{backgroundColor:"fondo.100"}}
-                    color={"white"}
-                    w={["200px", "300px", "350px", "400px"]}
+                 <Btn
+                    isSubmit={true}
                     mt={"30px"}
-                    type="submit"
-                  >Guardar</Button>
+                    w={["200px", "300px", "350px", "400px"]}
+                    msg={"Guardar"}
+                  />
                 </Box>
               </Form>
             )}

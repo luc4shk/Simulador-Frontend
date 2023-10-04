@@ -15,9 +15,9 @@ export default function ProtectedRoute({ isValid, children, redirectTo = "/" }) 
       const decode = jwt_decode(token);
       const rol = decode.tipo;
 
-      if (rol === "director" && isValid) {
+      if (rol === "Director" && isValid) {
         setIsLoading(false);
-      } else if (rol === "estudiante" && isValid) {
+      } else if (rol === "Estudiante" && isValid) {
         setIsLoading(false);
       }
     } else {

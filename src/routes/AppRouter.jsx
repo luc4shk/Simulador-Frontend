@@ -43,7 +43,7 @@ export default function AppRouter() {
     <>
       <Router>
         <Routes>
-          <Route element={<ProtectedRoute redirectTo="/user" isValid={role &&role==="director"}>
+          <Route element={<ProtectedRoute redirectTo="/user" isValid={role &&role==="Director"}>
               <Layout/>
             </ProtectedRoute>}>
             <Route path="/home" element={<PrincipalPage/>}/>
@@ -94,7 +94,7 @@ export default function AppRouter() {
           </Route>
 
          
-           <Route element={<ProtectedRoute redirectTo={"/home"} isValid={role && role==="estudiante"}>
+           <Route element={<ProtectedRoute redirectTo={"/home"} isValid={role && role==="Estudiante"}>
             {//<Layout/>
             }
           </ProtectedRoute>}>

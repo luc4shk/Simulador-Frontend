@@ -19,6 +19,7 @@ import { MdAdd, MdChevronLeft, MdChevronRight } from "react-icons/md";
 import axiosApi from "../../utils/config/axios.config";
 import { AppContext } from "../context/AppProvider";
 import { RiEdit2Fill } from "react-icons/ri";
+import Paginacion from "./Paginacion";
 import Btn from "./Btn";
 
 export default function TablaPrueba({ columns, items, path, msg, showButton }) {
@@ -78,7 +79,7 @@ export default function TablaPrueba({ columns, items, path, msg, showButton }) {
 
   useEffect(()=>{
     obtenerPruebas()
-  })
+  },[])
 
   return (
     <div>
@@ -196,6 +197,15 @@ export default function TablaPrueba({ columns, items, path, msg, showButton }) {
           msg={<Icon as={MdChevronRight} boxSize={5} />}
         />
       </Flex>
+       <Paginacion
+        currentPage={currentPage}
+        totalPages={totalPages}
+        indexI={indexI}
+        indexF={indexF}
+        handlePageChange={handlePageChange}
+        atrasPage={atrasPage}
+        adelantePage={adelantePage}
+      />
     </div>
   );
 }

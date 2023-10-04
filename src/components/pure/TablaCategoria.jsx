@@ -85,15 +85,8 @@ export default function TablaCategoria({ columns, items, path, msg, showButton }
     <Box >
       {showButton && (
         <Flex align={"center"} flexDir={["column", "column", "row"]} gap={"15px"} justifyContent={"space-between"}>
-          {/*<Boton
-            msg={msg}
-            leftIcon={<MdAdd />}
-            as={"link"}
-            path={path}
-            w={["100%", "250px"]}
-            radius={"8px"}
-          />*/}
-          <Btn path={path} w={["100%","250px"]} leftIcon={<MdAdd/>}>{msg}</Btn>
+
+          <Btn path={path} w={["100%","250px"]} leftIcon={<MdAdd/>} msg={msg}></Btn>
           <Flex align={"center"} gap={"5px"}>
             <FormLabel id="switch" m={"0"}>Mostrar Inactivos</FormLabel>
             <Switch id="switch" colorScheme="cyan" onChange={(e) => {

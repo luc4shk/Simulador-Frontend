@@ -7,8 +7,8 @@ export default function NavBar({ changeOpen, msg, isOpen }) {
     <Flex
       w={"100%"}
       bgColor={"white"}
-      borderBottom={"2px solid #bbb"}
-      h={"60px"}
+      boxShadow={"5px -4px 15px rgba(0,0,0,0.3)"}
+      h={"72px"}
       p={"10px"}
       alignItems={"center"}
       gap={"20px"}

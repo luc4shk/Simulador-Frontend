@@ -16,6 +16,7 @@ import { useLocation, useRoute } from "wouter";
 import { AppContext } from "../context/AppProvider";
 import axiosApi from "../../utils/config/axios.config";
 import { toast, Toaster } from "react-hot-toast";
+import Btn from "../pure/Btn";
 
 export default function FormularioEditarCompetencia() {
   const {id} = useParams()
@@ -96,6 +97,7 @@ export default function FormularioEditarCompetencia() {
           bgColor="white"
           minW={["150px", "250px", "480px", "550px"]}
           overflow="hidden"
+          boxShadow={"rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;"}
         >
           <Formik
             initialValues={datos}
@@ -172,14 +174,15 @@ export default function FormularioEditarCompetencia() {
                         <FormErrorMessage>{errors.descripcion}</FormErrorMessage>
                       </FormControl>
                     </Box>
-                    <Button
+                    <Btn
                       w={["200px", "300px", "350px", "400px"]}
                       mt={"30px"}
-                      type="submit"
-                      bgColor={"principal.100"}
-                      _hover={{ backgroundColor: "fondo.100" }}
-                      color={"white"}
-                    >Guardar</Button>
+                      isSubmit={true}
+                      msg={"Guardar"}
+
+                    >
+
+                    </Btn>
                   </Box>
                 </Form>
               );

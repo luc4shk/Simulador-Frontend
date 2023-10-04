@@ -83,14 +83,6 @@ export default function TablaCompetencia({ columns, items, path, msg, showButton
     <div>
       {showButton && (
         <Flex align={"center"} flexDir={["column", "column", "row"]} gap={"15px"} justifyContent={"space-between"}>
-        {/* <Boton
-          msg={msg}
-          leftIcon={<MdAdd />}
-          as={"link"}
-          path={path}
-          w={["100%", "250px"]}
-          radius={"8px"}
-        /> */}
         <Btn
           msg={"Agregar Competencia"}
           leftIcon={<MdAdd/>}

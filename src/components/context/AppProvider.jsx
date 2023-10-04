@@ -11,11 +11,12 @@ export function AppProvider({children}) {
   const change = () => setOpen(!open);
   const [user, setUser] = useState(null)
   const [role, setRole] = useState(null)
+  const [id, setId] = useState(null)
   const [token, setToken] = useState(()=>localStorage.getItem("token"))
   const [imagen, setImagen] = useState()
 
   useEffect(()=>{
-   // setToken(localStorage.getItem("token"))
+    //setToken(localStorage.getItem("token"))
     setImagen(localStorage.getItem("imagen"))
     if(token){
       decodeToken("token")
@@ -27,12 +28,14 @@ export function AppProvider({children}) {
     const decode = jwt_decode(localStorage.getItem(a))
     const rol = decode.tipo
     const email = decode.username
+    const id = decode.id
+    setId(id)
     setRole(rol)
     setUser(email)
   }
 
   return (
-    <AppContext.Provider value={{open,change, user,setImagen,imagen, setUser, token,role,setRole, setToken}}>
+    <AppContext.Provider value={{open,change, user,setImagen,imagen, setUser, token,role,setRole, setToken, id, setId}}>
       {children}
     </AppContext.Provider>
   )

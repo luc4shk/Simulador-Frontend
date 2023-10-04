@@ -7,28 +7,33 @@ import { extendTheme } from '@chakra-ui/react'
 
 
 const theme = extendTheme({
+  fonts: {
+    body: "Open Sans"
+  },
   colors: {
-    principal: {
-     100: "#fb8b83" 
+    primero: {
+      100: "#484c64" 
     },
-    fondo:{
-      100: "#F0847D"
+    segundo:{
+      100: "#edf2f7"
     },
-    secundario:{
-      100: "#ececec"
+    tercero:{
+       100: "#ffffff"
     },
-    selectOption:{
-      100:"#f4f4f4"
+    cuarto:{
+      100:"#f1f7fc"
+    },
+    quinto:{
+      100:"#1a202c"
     }
   },  
   breakpoints: {
     base: "0em",
-     sm: '30em', // 480px
-  md: '48em', // 768px
-  lg: '62em', // 992px
-  xl: '80em', // 1280px
-  '2xl': '96em', // 1536px
-    // Agrega tus breakpoints personalizados aquí
+    sm: '30em', 
+    md: '48em', 
+    lg: '62em', 
+    xl: '80em', 
+    '2xl': '96em', 
     tableBreakpoint: "1168px",
   },
   styles: {
@@ -55,8 +60,8 @@ const theme = extendTheme({
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode >
-   <ChakraProvider theme={theme}>
-    <App />
+    <ChakraProvider theme={theme}>
+      <App />
     </ChakraProvider> 
   </React.StrictMode>,
 )

@@ -16,13 +16,13 @@ export default function SideBar({isOpen}) {
   const {open, change} = useContext(AppContext)
 
   const navItems = [
-    {icon:AiOutlineHome,msg:"Panel Principal",active:false,path:"/home"},
-    {icon:AiOutlineFlag,msg:"Competencias",active:false,path:"/competencias"},
-    {icon:AiOutlineAppstore,msg:"Categorías",active:false,path:"/categorias"},
-    {icon:AiOutlineCalendar,msg:"Preguntas",active:false,path:"/preguntas"},
-    {icon:AiOutlineTeam,msg:"Estudiantes",active:false,path:"/estudiantes"},
-    {icon:AiOutlineFileAdd,msg:"Pruebas",active:false,path:"/pruebas"},
-    {icon:AiOutlineBook,msg:"Convocatorias",active:false, path:"/convocatorias"},
+    {icon:AiOutlineHome,msg:"Panel Principal",active:false,path:["/home","/cambiarImagen","/editarInformacion","/cambiarContrasenia"]},
+    {icon:AiOutlineFlag,msg:"Competencias",active:false,path:["/competencias","/formularioCompetencia","/editarCompetencia"]},
+    {icon:AiOutlineAppstore,msg:"Categorías",active:false,path:["/categorias","/formularioCategoria","/editarCategoria"]},
+    {icon:AiOutlineCalendar,msg:"Preguntas",active:false,path:["/preguntas","/tipoPregunta","/formularioPreguntaSimple","/formularioPreguntaImagen","/editarPregunta"]},
+    {icon:AiOutlineTeam,msg:"Estudiantes",active:false,path:["/estudiantes","/editarEstudiante"]},
+    {icon:AiOutlineFileAdd,msg:"Pruebas",active:false,path:["/pruebas","/crearPrueba"]},
+    {icon:AiOutlineBook,msg:"Convocatorias",active:false, path:["/convocatorias","/formularioConvocatoria"]},
   ]
   
   const [items, setItems] = useState(navItems)
@@ -38,13 +38,12 @@ export default function SideBar({isOpen}) {
         w={["70px","70px","200px"]}
         h={"100%"}
         alignItems={"center"}
-        backgroundColor={"principal.100"}
+        backgroundColor={"primero.100"}
         padding={"15px"}
         justifyContent={"space-between"}
         transform={ isOpen ? "translateX(-100%)" : "translateX(0px)"}
         transition={"all 0.5s"}
         overflow={"hidden"}
-        borderRight={"1px solid #bbb"}
         >
         <Flex
           direction={"column"}

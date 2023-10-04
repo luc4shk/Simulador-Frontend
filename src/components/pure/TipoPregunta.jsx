@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Button, Center, Heading, Stack } from "@chakra-ui/react";
-import { Link } from "wouter";
+import { Link } from "react-router-dom";
 
 export default function TipoPregunta() {
   return (

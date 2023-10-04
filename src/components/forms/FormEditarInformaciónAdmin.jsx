@@ -7,6 +7,7 @@ import {
   Image,
   Icon,
   FormControl,
+  FormLabel,
   FormErrorMessage,
 } from "@chakra-ui/react";
 import Boton from "../pure/Boton";
@@ -16,30 +17,59 @@ import axiosApi from "../../utils/config/axios.config";
 import { AppContext } from "../context/AppProvider";
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate} from "react-router-dom";
+import Btn from "../pure/Btn";
 export default function EditarInformacionAdmin() {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState({})
-  const navigation = useNavigate()
+  const navigate = useNavigate()
   const {token, setToken} = useContext(AppContext)
 
 
     useEffect(()=>{
-    getAdminById(1)
+    getAdmin()
   },[])
 
-  const getAdministratorById = async (id) =>{
+  {/*const getAdministratorById = async (id) =>{
 
     let response = await axiosApi.get(`/api/user/admin/${id}`,{
         headers:{ Authorization:"Bearer " + token},
     })
     return response.data
     
-}
+}*/}
+
+  const getAdministrator = async () =>{
+      
+    let response = await axiosApi.get("/api/user/profile",{
+      headers:{ Authorization:"Bearer " + token }
+    })
+
+    return response.data
+  }
+
+  const getAdmin = async () =>{
+    const data = await getAdministrator()
+
+    setData({
+      nombre:data.nombre,
+      apellido:data.apellido,
+      direccion:data.direccion,
+      email: data.email,
+      documento: data.documento,
+      celular: data.celular,
+      telefono: data.telefono,
+      codigo: data.codigo,
+      //imagen:data.foto_perfil && data.foto_perfil.url
+    })
+
+    setIsLoading(false)
+
+  }
  
 
 const actualizarDatos = async (nombre, apellido, direccion, email, documento, celular, telefono, codigo, estado=true) =>{
 
-    let response = await axiosApi.put(`api/user/admin/update/${1}`,{
+    let response = await axiosApi.put(`api/user/admin/update`,{
         nombre:nombre,
         apellido:apellido,
         direccion: direccion,
@@ -62,13 +92,14 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
 
     if(response.status === 200){
       toast.success("¡Datos Actualizados!")
+      navigate("/home")
     }
-
-    "" 
 }
 
 
- const getAdminById = async (id) =>{
+
+
+{/*const getAdminById = async (id) =>{
      const data = await getAdministratorById(id)
      
      setData({
@@ -84,6 +115,7 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
      
      setIsLoading(false)
   }
+  */}
   const initialValues = 
  {
       nombre: data.nombre,
@@ -118,11 +150,6 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
         validationSchema={validationSchema}
         onSubmit={( {nombre, apellido, direccion, email, documento, celular, telefono, codigo } ) => {
           actualizarDatos(nombre, apellido, direccion, email, documento, celular, telefono, codigo)
-          setTimeout(()=>{
-              navigate("/")
-          },1500)
-          clearInterval(setTimeout)
-          alert(JSON.stringify(values, null, 2))
         }}
       >
         {(values) => {
@@ -133,9 +160,10 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
                 p={"20px"}
                 borderRadius={"8px"}
                 bgColor={"white"}
-                minW={["200px", "350px", "400px", "500px"]}
+                w={["200px", "350px", "450px", "550px"]}
                 maxHeight={"auto"}
                 overflow={"hidden"}
+                boxShadow={"rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;"}
               >
                 <Box
                   display={"flex"}
@@ -152,7 +180,7 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
                     justifyContent={"space-between"}
                   >
                       <FormControl display={"flex"} flexDirection={"column"} isInvalid={errors.nombre && touched.nombre}>
-                        <label htmlFor="nombre">Nombre</label>
+                        <FormLabel htmlFor="nombre">Nombre</FormLabel>
                         <Field
                           
                           as={Input}
@@ -160,14 +188,14 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
                           id="nombre"
                           name="nombre"
                           type="text"
-                          w={["100%", "100%", "160px", "185px", "210px"]}
+                          
                         />
                         <FormErrorMessage>{errors.nombre}</FormErrorMessage>
                       </FormControl>
                     
                     
                       <FormControl display={"flex"} flexDirection={"column"} isInvalid={errors.apellido && touched.apellido}>
-                      <label  htmlFor="apellido">Apellido</label>
+                      <FormLabel  htmlFor="apellido">Apellido</FormLabel>
                       <Field
                          
                         as={Input}
@@ -175,7 +203,7 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
                         id="apellido"
                         name="apellido"
                         type="text"
-                        w={["100%", "100%", "160px", "185px", "210px"]}
+                        
                       />
                       <FormErrorMessage>{errors.apellido}</FormErrorMessage>
                       </FormControl>
@@ -183,7 +211,7 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
                   </Flex>
                   
                     <FormControl display={"flex"} flexDir={"column"} isInvalid={errors.direccion && touched.direccion}>
-                    <label htmlFor="direccion">Dirección</label>
+                    <FormLabel htmlFor="direccion">Dirección</FormLabel>
                     <Field
                         
                       as={Input}
@@ -198,7 +226,7 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
                   
                   
                     <FormControl display={"flex"} flexDir={"column"} isInvalid={errors.email && touched.email} >
-                    <label htmlFor="email">email Institucional</label>
+                    <FormLabel htmlFor="email">Email Institucional</FormLabel>
                     <Field
                       
                       as={Input}
@@ -220,7 +248,7 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
                   >
                     
                       <FormControl display={"flex"} flexDirection={"column"} isInvalid={errors.documento && touched.documento}>
-                      <label htmlFor="documento">Número de Documento</label>
+                      <FormLabel htmlFor="documento">Número de Documento</FormLabel>
                       <Field
                         
                         as={Input}
@@ -228,13 +256,13 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
                         id="documento"
                         name="documento"
                         type="text"
-                        w={["100%", "100%", "160px", "185px", "210px"]}
+                        
                       />
                       <FormErrorMessage>{errors.documento}</FormErrorMessage>
                       </FormControl>
                     
                       <FormControl display={"flex"} flexDirection={"column"} isInvalid={errors.celular && touched.celular}>
-                      <label htmlFor="celular">Celular</label>
+                      <FormLabel htmlFor="celular">Celular</FormLabel>
                       <Field
                         
                         as={Input}
@@ -242,7 +270,7 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
                         id="celular"
                         name="celular"
                         type="text"
-                        w={["100%", "100%", "160px", "185px", "210px"]}
+                        
                       />
                       <FormErrorMessage>{errors.celular}</FormErrorMessage>
                       </FormControl>
@@ -256,7 +284,7 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
                   >
                    
                       <FormControl display={"flex"} flexDirection={"column"} isInvalid={errors.telefono && touched.telefono}>
-                      <label htmlFor="telefono">Teléfono</label>
+                      <FormLabel htmlFor="telefono">Teléfono</FormLabel>
                       <Field
                         
                         as={Input}
@@ -264,7 +292,7 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
                         id="telefono"
                         name="telefono"
                         type="text"
-                        w={["100%", "100%", "160px", "185px", "210px"]}
+                        
 
                       />
                       <FormErrorMessage>{errors.telefono}</FormErrorMessage>
@@ -272,7 +300,7 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
                   
                     
                       <FormControl display={"flex"} flexDirection={"column"} isInvalid={errors.codigo && touched.codigo}>
-                      <label htmlFor="codigo">Código</label>
+                      <FormLabel htmlFor="codigo">Código</FormLabel>
                       <Field
                         
                         as={Input}
@@ -280,7 +308,7 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
                         id="codigo"
                         name="codigo"
                         type="text"
-                        w={["100%", "100%", "160px", "185px", "210px"]}
+                        
                       />
                       <FormErrorMessage>{errors.codigo}</FormErrorMessage> 
                       </FormControl>
@@ -292,12 +320,13 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
                     gap={["8px", "8px", "0"]}
                     justifyContent={"center"}
                   >
-                    <Button
-                      w={["100%", "100%", "160px", "185px", "210px"]}
-                      type="submit"
+                    <Btn
+                      isSubmit={true}
+                      w={"100%"} 
+                      msg={"Enviar"}
                     >
-                      Enviar
-                    </Button>
+
+                    </Btn>
                   </Flex>
                 </Box>
               </Box>

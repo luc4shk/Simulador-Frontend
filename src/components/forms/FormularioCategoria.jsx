@@ -1,18 +1,18 @@
 
-import { Box, Button, Center, FormControl, FormErrorMessage, Input, Select, Textarea, Toast, defineStyleConfig, useEditable } from "@chakra-ui/react";
+import { Box, Center, FormControl, FormErrorMessage, Input, Select, Textarea} from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import Boton from "../pure/Boton";
 import axiosApi from "../../utils/config/axios.config";
-import {  toast, Toaster } from "react-hot-toast";
+import {  toast} from "react-hot-toast";
 import { AppContext } from "../context/AppProvider";
+import Btn from "../pure/Btn";
 
 export default function FormularioCategoria() {
   const { token } = useContext(AppContext);
   const [competencia, setCompetencia] = useState([]);
-  const [loc, setLoc] = useLocation()
+  const navigate = useNavigate()
 
   const obtenerCompetencias = async () => {
     let response = await axiosApi.get("/api/competencia", {
@@ -42,9 +42,12 @@ export default function FormularioCategoria() {
       },
     }).catch((e)=>{
       toast.error(e.response.data.error)
+      console.log(e)
     }).finally(()=>{
-      setLoc("/categorias")
+      navigate("/categorias")
     })
+
+    
 
     if(response.status===200){
       toast.success("¡Categoría agregada correctamente!")
@@ -74,7 +77,10 @@ export default function FormularioCategoria() {
 
 
   return (
-    <Box position="fixed">
+    <Box position="fixed"
+          boxShadow={"rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;"}
+    >
+
       <Center h="100%">
         <Box
           p="40px"
@@ -87,7 +93,7 @@ export default function FormularioCategoria() {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={({nombre, descripcion,competencia})=>{
-              agregarCategoria(nombre,descripcion,competencia)
+              agregarCategoria(nombre,descripcion,parseInt(competencia))
             }}
           >
             {(formik) => (
@@ -165,14 +171,13 @@ export default function FormularioCategoria() {
                   </Field>
                   <FormErrorMessage>{formik.errors.competencia}</FormErrorMessage>
                 </FormControl>
-                <Button
-                 bgColor={"principal.100"}
-                      _hover={{backgroundColor:"fondo.100"}}
-                      color={"white"}
+                <Btn
+                  isSubmit={true}
                   w={["200px", "300px", "350px", "400px"]}
                   mt={"30px"}
-                  type="submit"
-                >Guardar</Button>
+                  msg={"Guardar"}
+
+                />
               </Box>
               </Form>
             )}

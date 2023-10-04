@@ -12,7 +12,8 @@ export default function Page({ changeOpen, isOpen , componente, msg}) {
       position={"relative"}
       transition={"all 0.5s"}
       flexDir={"column"}
-      bgColor={"secundario.100"}
+      //bgColor={"secundario.100"}
+      bgColor={"cuarto.100"}
       >
       <NavBar
         changeOpen={changeOpen}

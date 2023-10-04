@@ -15,6 +15,7 @@ import {React, useContext }from "react";
 import { Link } from "wouter";
 import { AppContext } from "../context/AppProvider";
 import Boton from "../pure/Boton";
+import Btn from "../pure/Btn";
 
 export default function FormularioCambiarContraseña() {
 
@@ -67,6 +68,7 @@ export default function FormularioCambiarContraseña() {
       pt={8}
       width={{ base: "100%", sm: "380px" }}
       height="auto"
+      boxShadow={"rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px"}
     >
       <Formik
         initialValues={initialValues}
@@ -125,23 +127,16 @@ export default function FormularioCambiarContraseña() {
                 />
                 <FormErrorMessage>{errors.passwordR}</FormErrorMessage>
               </FormControl>
-              <Button
+                            <Btn
                 color="white"
                 background="principal.100"
                 mt={4}
-                width="full"
-                type="submit"
+                w="full"
+                isSubmit={true}
+                msg={"Aceptar"}
               >
-                Aceptar
-              </Button>
-              {/* <Boton
-              as={"link"}
-              path={"/"}
-              msg={"Aceptar"}
-              mt={4}
-              width="full"
-              type={"submit"}
-            /> */}
+
+              </Btn>
             </Form>
           );
         }}

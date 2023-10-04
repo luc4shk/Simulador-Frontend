@@ -6,11 +6,12 @@ import Boton from "../pure/Boton";
 import axiosApi from "../../utils/config/axios.config";
 import { getAdministratorById } from "../../services/user/axios.service";
 import { AppContext } from "../context/AppProvider";
+import Btn from "../pure/Btn";
 
 export default function AdminProfileForm() {
 
-  const {token, setToken, imagen} = useContext(AppContext)
-  const [adminData, setAdminData] = useState()
+  //const {token, setToken, imagen} = useContext(AppContext)
+  const {token} = useContext(AppContext)
   const [data, setData] = useState({})
 
   const nombreRef = useRef(null);
@@ -23,20 +24,13 @@ export default function AdminProfileForm() {
   const codigoRef = useRef(null);
 
   useEffect(()=>{
-    getAdminById(1)
+    getAdmin()
   },[])
-  const getAdministratorById = async (id) =>{
 
-    let response = await axiosApi.get(`/api/user/admin/${id}`,{
-      headers:{ Authorization:"Bearer " + token},
-    })
-    return response.data
 
-  }
-
-  const getAdminById = async (id) =>{
-    const data = await getAdministratorById(id)
-
+  const getAdmin = async () =>{
+    const data = await getAdministrator()
+    console.log(data)
     setData({
       nombre:data.nombre,
       apellido:data.apellido,
@@ -45,8 +39,23 @@ export default function AdminProfileForm() {
       documento: data.documento,
       celular: data.celular,
       telefono: data.telefono,
-      codigo: data.codigo
+      codigo: data.codigo,
+      imagen:data.foto_perfil && data.foto_perfil.url
     })
+
+    console.log(data.foto_perfil.url)
+
+  }
+
+
+  const getAdministrator = async () =>{
+      
+    let response = await axiosApi.get("/api/user/profile",{
+      headers:{ Authorization:"Bearer " + token }
+    })
+    console.log(response.data)
+
+    return response.data
   }
 
   return (
@@ -54,6 +63,7 @@ export default function AdminProfileForm() {
       <Box
         p={"20px"}
         borderRadius={"8px"}
+        boxShadow={"rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;"}
         bgColor={"white"}
         minW={["200px", "350px", "400px", "500px"]}
         maxHeight={"auto"}
@@ -75,7 +85,9 @@ export default function AdminProfileForm() {
             w={"100%"}
           >
             <Image
-              src={imagen}
+              src={data && data.imagen}
+              key={data && data.imagen}
+              onClick={()=>console.log(data.imagen)}
               width={["70px", "100px", "130px"]}
               height={["70px", "100px", "130px"]}
               borderRadius={"50%"}
@@ -90,13 +102,13 @@ export default function AdminProfileForm() {
               top={["50px", "73px", "100px"]}
               left={["125px", "180px", "210px", "260px"]}
               borderRadius={"50%"}
-              backgroundColor={"principal.100"}
+              backgroundColor={"segundo.100"}
               as={Link}
               to="/cambiarImagen"
               _hover={"none"}
               _active={"none"}
             >
-              <Icon color="white" as={RiEdit2Fill} />
+              <Icon color="#1a202c" as={RiEdit2Fill} />
             </Button>
           </Box>
           <Flex
@@ -231,22 +243,23 @@ export default function AdminProfileForm() {
             gap={["8px", "8px", "0"]}
             justifyContent={"space-between"}
           >
-            <Link to="/editarInformacion">
-            <Button
-              w={["100%", "100%", "160px", "185px", "200px"]}
-              bgColor={"principal.100"}
-              textColor={"white"}
-            >Editar Información</Button>
-            </Link>
 
-
-            <Link to="/cambiarContrasenia">
-            <Button
+            <Btn
               w={["100%", "100%", "160px", "185px", "200px"]}
-              bgColor={"principal.100"}
-              textColor={"white"}
-            >Cambiar Contraseña</Button>
-            </Link>
+              path="/editarInformacion"
+              textColor={"quinto.100"}
+              msg={"Editar Información"}
+
+            />
+            
+             <Btn
+              w={["100%", "100%", "160px", "185px", "200px"]}
+              path="/cambiarContrasenia"
+              textColor={"quinto.100"}
+              msg={"Cambiar Contraseña"}
+
+            />
+
 
           </Flex>
         </Box>

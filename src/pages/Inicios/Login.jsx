@@ -27,10 +27,10 @@ export default function Login() {
   const navigate = useNavigate()
 
   const redireccion = (rol) =>{
-    if(rol==="director"){
+    if(rol==="Director"){
       console.log("Rol desde función",rol)
       navigate("/home")
-    }else if(rol==="estudiante"){
+    }else if(rol==="Estudiante"){
       console.log("Rol desde función",rol)
       navigate("/user")
     }else{
@@ -112,7 +112,7 @@ export default function Login() {
               </Box>
               <Button
                 color="white"
-                background={"principal.100"}
+                background={"primero.100"}
                 mt={4}
                 width="full"
                 type="submit"

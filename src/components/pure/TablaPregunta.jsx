@@ -18,9 +18,11 @@ import { Link } from "react-router-dom";
 import Boton from "../pure/Boton";
 import { AppContext } from "../context/AppProvider";
 import axiosApi from "../../utils/config/axios.config";
+import Btn from "../pure/Btn"
 import { toast } from "react-hot-toast";
 import { RiEdit2Fill } from "react-icons/ri";
 import { MdAdd, MdChevronLeft, MdChevronRight } from "react-icons/md";
+import Paginacion from "./Paginacion";
 
 export default function TablaPregunta({ columns, items, path, msg, showButton }) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -45,7 +47,7 @@ export default function TablaPregunta({ columns, items, path, msg, showButton })
     setCurrentPage(selected);
   };
 
-   const obtenerActivos = async (estado) => {
+  const obtenerActivos = async (estado) => {
     let response = await axiosApi.get(`/api/question/?estado=${estado}`, {
       headers: {
         Authorization: "Bearer " + token,
@@ -79,22 +81,30 @@ export default function TablaPregunta({ columns, items, path, msg, showButton })
     setIndexF(indexF - 5);
   };
 
-   useEffect(() => {
+  useEffect(() => {
     obtenerActivos(1)
   }, [])
 
-   return (
+  return (
     <Box >
       {showButton && (
         <Flex align={"center"} flexDir={["column", "column", "row"]} gap={"15px"} justifyContent={"space-between"}>
-          <Boton
+          {/*<Boton
             msg={msg}
             leftIcon={<MdAdd />}
-            as={"link"}
+            as={Link}
             path={path}
             w={["100%", "250px"]}
             radius={"8px"}
-          />
+          />*/}
+          <Btn
+            leftIcon={<MdAdd/>}
+            path={path}
+            msg={"Agregar Pregunta"}
+            w={["100%", "250px"]}
+          >
+
+          </Btn>
           <Flex align={"center"} gap={"5px"}>
             <FormLabel id="switch" m={"0"}>Mostrar Inactivos</FormLabel>
             <Switch id="switch" colorScheme="cyan" onChange={(e) => {
@@ -144,11 +154,11 @@ export default function TablaPregunta({ columns, items, path, msg, showButton })
                   <Tr key={item.id}>
                     <Td>{item.id}</Td>
                     <Td
-                        maxW={"300px"}
-                        textOverflow={"ellipsis"}
-                        overflow={"hidden"}
-                        whiteSpace={"nowrap"}
-                       
+                      maxW={"300px"}
+                      textOverflow={"ellipsis"}
+                      overflow={"hidden"}
+                      whiteSpace={"nowrap"}
+
                     >{item.texto_pregunta}</Td>
                     <Td>{item.semestre}</Td>
                     <Td>{item.estado ? "Activo" : "Inactivo"}</Td>
@@ -157,7 +167,7 @@ export default function TablaPregunta({ columns, items, path, msg, showButton })
                       <Button variant={"unstyled"} as={Link} to={`/editarPregunta/${item.id}`}>
                         <Icon w={"20px"} h={"20px"} as={RiEdit2Fill} />
                       </Button>
-                    }</Td>
+                      }</Td>
                   </Tr>
 
                 ))}
@@ -178,27 +188,27 @@ export default function TablaPregunta({ columns, items, path, msg, showButton })
           msg={<Icon as={MdChevronLeft} boxSize={5} />}
         />
         {Array.from({ length: totalPages })
-          .slice(indexI, indexF)
-          .map((_, index) => {
-            index = index + indexI;
-            return (
-              <Button
-                key={index}
-                onClick={() => {
-                  handlePageChange(index);
-                }}
-                bgColor={currentPage === index ? "white" : "principal.100"}
-                textColor={currentPage === index ? "black" : "white"}
-                _hover={{
-                  bgColor: currentPage === index ? "#F0847D" : "gray.300",
-                }}
-                w="30px"
-                alignItems="center"
-              >
-                {index + 1}
-              </Button>
-            );
-          })}
+            .slice(indexI, indexF)
+            .map((_, index) => {
+              index = index + indexI;
+              return (
+                <Button
+                  key={index}
+                  onClick={() => {
+                    handlePageChange(index);
+                  }}
+                  bgColor={currentPage === index ? "white" : "principal.100"}
+                  textColor={currentPage === index ? "black" : "white"}
+                  _hover={{
+                    bgColor: currentPage === index ? "#F0847D" : "gray.300",
+                  }}
+                  w="30px"
+                  alignItems="center"
+                >
+                  {index + 1}
+                </Button>
+              );
+            })}
         <Boton
           isDisabled={currentPage === totalPages - 1}
           funcion={adelantePage}
@@ -207,6 +217,15 @@ export default function TablaPregunta({ columns, items, path, msg, showButton })
           msg={<Icon as={MdChevronRight} boxSize={5} />}
         />
       </Flex>
+      <Paginacion
+        currentPage={currentPage}
+        totalPages={totalPages}
+        indexI={indexI}
+        indexF={indexF}
+        handlePageChange={handlePageChange}
+        atrasPage={atrasPage}
+        adelantePage={adelantePage}
+      />
     </Box>
   );
 }

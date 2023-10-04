@@ -7,10 +7,9 @@ import {
   } from "@chakra-ui/react";
   import * as Yup from "yup";
   import { Formik, Field, Form } from "formik";
-  import toast, { Toaster } from "react-hot-toast";
+  import toast from "react-hot-toast";
   import CardLogo from "../pure/CardLogo";
-  import React, {useEffect} from "react";
-  import { useLocation, useRoute } from "wouter";
+  import React from "react";
   import { useParams, useNavigate } from "react-router-dom";
 import axiosApi from "../../utils/config/axios.config";
   
@@ -21,10 +20,8 @@ import axiosApi from "../../utils/config/axios.config";
     };
   
    
-    //const [match, params] = useRoute("/newPassword/:id/:token")
     const {id, token} = useParams()
     const navigate = useNavigate()
-    //const [loc, setLoc] = useLocation()
 
   const actualizarContrasenia = async (user_id, resetString, newPassword) =>{
     let body={
