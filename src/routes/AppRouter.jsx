@@ -33,6 +33,7 @@ import EmailRecuperación from "../components/forms/EmailRecuperacion";
 import NewPassword from "../components/forms/NewPassword";
 import ProtectedRoute from "./ProtectedRoute";
 import Layout from "../components/container/Layout";
+import PrincipalPageUser from "../pages/User/principal/PrincipalPageUser";
 export default function AppRouter() {
 
   const { token, user, role} = useContext(AppContext);
@@ -95,17 +96,11 @@ export default function AppRouter() {
 
          
            <Route element={<ProtectedRoute redirectTo={"/home"} isValid={role && role==="Estudiante"}>
-            {//<Layout/>
+            {<Layout/>
             }
           </ProtectedRoute>}>
 
-            <Route path="/user" element={
-              <>
-                <div>
-                  Hola, user main
-                </div>
-                </>
-            }/>
+            <Route path="/user" element={<PrincipalPageUser/>}></Route>
             <Route path="/puntaje" element={
               <>
                 <div>

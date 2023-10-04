@@ -11,9 +11,20 @@ import { AiOutlineFlag,
 
 import {BiLogOut} from "react-icons/bi"
 import { AppContext } from './context/AppProvider';
+import jwt_decode from "jwt-decode"
+
 export default function SideBar({isOpen}) {
 
-  const {open, change} = useContext(AppContext)
+  const [role, setRole] = useState(null);
+  const { token } = useContext(AppContext);
+
+  useEffect(() => {
+    if (token) {
+      const decode = jwt_decode(token);
+      const rol = decode.tipo;
+      setRole(rol);
+    }
+  }, [token]);
 
   const navItems = [
     {icon:AiOutlineHome,msg:"Panel Principal",active:false,path:["/home","/cambiarImagen","/editarInformacion","/cambiarContrasenia"]},
@@ -24,9 +35,16 @@ export default function SideBar({isOpen}) {
     {icon:AiOutlineFileAdd,msg:"Pruebas",active:false,path:["/pruebas","/crearPrueba"]},
     {icon:AiOutlineBook,msg:"Convocatorias",active:false, path:["/convocatorias","/formularioConvocatoria"]},
   ]
+
+  const userNavItems = [
+    {icon:AiOutlineHome,msg:"Panel Principal",active:false,path:"/home"},
+    {icon:AiOutlineFileAdd,msg:"Pruebas",active:false,path:"/pruebas"},
+    {icon:AiOutlineBook,msg:"Convocatorias",active:false, path:"/convocatorias"},
+  ]
   
-  const [items, setItems] = useState(navItems)
- const [w] = useMediaQuery("(min-width: 768px)");
+  // const [items, setItems] = useState(navItems)
+  const items = role ==="Director" ? navItems : userNavItems
+  const [w] = useMediaQuery("(min-width: 768px)");
  
 
   return (
