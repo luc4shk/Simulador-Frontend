@@ -34,6 +34,7 @@ import NewPassword from "../components/forms/NewPassword";
 import ProtectedRoute from "./ProtectedRoute";
 import Layout from "../components/container/Layout";
 import PrincipalPageUser from "../pages/User/principal/PrincipalPageUser";
+import EditarInfoUser from "../pages/User/principal/EditarInfoUser";
 export default function AppRouter() {
 
   const { token, user, role} = useContext(AppContext);
@@ -44,95 +45,128 @@ export default function AppRouter() {
     <>
       <Router>
         <Routes>
-          <Route element={<ProtectedRoute redirectTo="/user" isValid={role &&role==="Director"}>
-              <Layout/>
-            </ProtectedRoute>}>
-            <Route path="/home" element={<PrincipalPage/>}/>
-            <Route path="/competencias" element={<Competencias/>}>
-            </Route>
-            <Route path="/categorias" element={<Categorias/>}>
-            </Route>
-            <Route path="/pruebas" element={<Pruebas/>}>
-            </Route>
-            <Route path="/preguntas" element={<Preguntas/>}>
-            </Route>
-            <Route path="/estudiantes" element={<Estudiantes/>}>
-            </Route>
-            <Route path="/convocatorias" element={<Convocatorias/>}>
-            </Route>
-            <Route path="/formularioCompetencia" element={<AgregarCompetencia/>}>
-            </Route>
-            <Route path="/formularioCategoria" element={<AgregarCategoria/>}>
-            </Route>
-            <Route path="/tipoPregunta" element={<SeleccionarTipoPregunta/>}>
-            </Route>
-            <Route path="/formularioPreguntaSimple" element={<PreguntaSimple/>}>
-            </Route>
-            <Route path="/formularioPreguntaImagen" element={<PreguntaImagen/>}>
-            </Route>
-            <Route path="/formularioConvocatoria" element={<AgregarConvocatoria/>}>
-            </Route>
-            <Route path="/crearPrueba" element={<AgregarPrueba/>}>
-            </Route>
-            <Route path="/cambiarContrasenia" element={<CambiarContrasenia/>}>
-            </Route>
-            <Route path="/cambiarImagen" element={<CambiarImagen/>}>
-            </Route>
-            <Route path="/editarInformacion" element={<EditarInformacion/>}>
-            </Route>
-            <Route path="/editarCompetencia/:id" element={<EditarCompetencia/>}>
-            </Route>
-            <Route path="/editarCategoria/:id" element={<EditarCategoria/>}>
-            </Route>
-            <Route path="/editarPregunta/:id" element={<EditarPregunta/>}>
-            </Route>
-            <Route path="/editarEstudiante/:id" element={<EditarEstudiante/>}>
-            </Route>
-            <Route path="/editarPrueba/:id" element={<EditarEstudiante/>}>
-            </Route>
-            <Route path="/editarConvocatoria/:id" element={<EditarConvocatoria/>}>
-            </Route>
-          </Route>
-
-         
-           <Route element={<ProtectedRoute redirectTo={"/home"} isValid={role && role==="Estudiante"}>
-            {<Layout/>
+          <Route
+            element={
+              <ProtectedRoute
+                redirectTo="/user"
+                isValid={role && role === "Director"}
+              >
+                <Layout />
+              </ProtectedRoute>
             }
-          </ProtectedRoute>}>
-
-            <Route path="/user" element={<PrincipalPageUser/>}></Route>
-            <Route path="/puntaje" element={
-              <>
-                <div>
-                  Hola, user main, sección puntaje
-                </div>
-                </>
-            }/>
-            <Route path="/pruebasUser" element={
-              <>
-                <div>
-                  Hola, user main, sección pruebasUser
-                </div>
-                </>
-            }/>
-            <Route path="/convocatoriasUser" element={
-              <>
-                <div>
-                  Hola, user main, sección convocatoriasUser
-                </div>
-                </>
-            }/>
-            
+          >
+            <Route path="/home" element={<PrincipalPage />} />
+            <Route path="/competencias" element={<Competencias />}></Route>
+            <Route path="/categorias" element={<Categorias />}></Route>
+            <Route path="/pruebas" element={<Pruebas />}></Route>
+            <Route path="/preguntas" element={<Preguntas />}></Route>
+            <Route path="/estudiantes" element={<Estudiantes />}></Route>
+            <Route path="/convocatorias" element={<Convocatorias />}></Route>
+            <Route
+              path="/formularioCompetencia"
+              element={<AgregarCompetencia />}
+            ></Route>
+            <Route
+              path="/formularioCategoria"
+              element={<AgregarCategoria />}
+            ></Route>
+            <Route
+              path="/tipoPregunta"
+              element={<SeleccionarTipoPregunta />}
+            ></Route>
+            <Route
+              path="/formularioPreguntaSimple"
+              element={<PreguntaSimple />}
+            ></Route>
+            <Route
+              path="/formularioPreguntaImagen"
+              element={<PreguntaImagen />}
+            ></Route>
+            <Route
+              path="/formularioConvocatoria"
+              element={<AgregarConvocatoria />}
+            ></Route>
+            <Route path="/crearPrueba" element={<AgregarPrueba />}></Route>
+            <Route
+              path="/cambiarContrasenia"
+              element={<CambiarContrasenia />}
+            ></Route>
+            <Route path="/cambiarImagen" element={<CambiarImagen />}></Route>
+            <Route
+              path="/editarInformacion"
+              element={<EditarInformacion />}
+            ></Route>
+            <Route
+              path="/editarCompetencia/:id"
+              element={<EditarCompetencia />}
+            ></Route>
+            <Route
+              path="/editarCategoria/:id"
+              element={<EditarCategoria />}
+            ></Route>
+            <Route
+              path="/editarPregunta/:id"
+              element={<EditarPregunta />}
+            ></Route>
+            <Route
+              path="/editarEstudiante/:id"
+              element={<EditarEstudiante />}
+            ></Route>
+            <Route
+              path="/editarPrueba/:id"
+              element={<EditarEstudiante />}
+            ></Route>
+            <Route
+              path="/editarConvocatoria/:id"
+              element={<EditarConvocatoria />}
+            ></Route>
           </Route>
 
+          <Route
+            element={
+              <ProtectedRoute
+                redirectTo={"/home"}
+                isValid={role && role === "Estudiante"}
+              >
+                {<Layout />}
+              </ProtectedRoute>
+            }
+          >
+            <Route path="/user" element={<PrincipalPageUser />}></Route>
+            <Route path="/editarInformacionEstudiante" element={<EditarInfoUser/>}></Route>
+            <Route
+              path="/puntaje"
+              element={
+                <>
+                  <div>Hola, user main, sección puntaje</div>
+                </>
+              }
+            />
+            <Route
+              path="/pruebasUser"
+              element={
+                <>
+                  <div>Hola, user main, sección pruebasUser</div>
+                </>
+              }
+            />
+            <Route
+              path="/convocatoriasUser"
+              element={
+                <>
+                  <div>Hola, user main, sección convocatoriasUser</div>
+                </>
+              }
+            />
+          </Route>
 
-          <Route path="/newPassword/:id/:token" element={<NewPassword/>}>
-          </Route>
-          <Route path="/" element={<Login/>}>
-          </Route>
-          <Route path="/recuperarEmail" element={<EmailRecuperación/>}>
-          </Route>
-          <Route path="*" element={<ErrorPage role={role}/>} />
+          <Route
+            path="/newPassword/:id/:token"
+            element={<NewPassword />}
+          ></Route>
+          <Route path="/" element={<Login />}></Route>
+          <Route path="/recuperarEmail" element={<EmailRecuperación />}></Route>
+          <Route path="*" element={<ErrorPage role={role} />} />
         </Routes>
       </Router>
       <Toaster reverseOrder={true} />

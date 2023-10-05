@@ -136,7 +136,7 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
     documento: Yup.string().required("Campo requerido").max(10,"Maximo 10 dígitos").min(7,"Mínimo 7 digitos"),
     celular: Yup.string().required("Campo requerido").max(10,"Maximo 10 dígitos").min(10,"Mínimo 10 digitos"),
     telefono: Yup.string().required("Campo requerido").max(7,"Maximo 7 dígitos").min(7,"Mínimo 7 digitos"),
-    codigo: Yup.string().required("Campo requerido").max(10,"Maximo 10 dígitos").min(7,"Mínimo 6 digitos"),
+    codigo: Yup.string().required("Campo requerido").max(10,"Maximo 10 dígitos").min(7,"Mínimo 7 digitos"),
   });
 
 
