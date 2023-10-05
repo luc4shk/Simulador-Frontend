@@ -1,7 +1,6 @@
 import React from "react";
 import NavBar from "../NavBar";
-import { Input, Flex, Box, Button, Image, Icon } from "@chakra-ui/react";
-import { RiEdit2Fill } from "react-icons/ri";
+import { Flex, Button, Image, Icon } from "@chakra-ui/react";
 
 export default function Page({ changeOpen, isOpen , componente, msg}) {
   return (
@@ -12,7 +11,6 @@ export default function Page({ changeOpen, isOpen , componente, msg}) {
       position={"relative"}
       transition={"all 0.5s"}
       flexDir={"column"}
-      //bgColor={"secundario.100"}
       bgColor={"cuarto.100"}
       >
       <NavBar

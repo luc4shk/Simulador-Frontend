@@ -108,6 +108,21 @@ export default function AppRouter() {
                 </div>
                 </>
             }/>
+            <Route path="/pruebasUser" element={
+              <>
+                <div>
+                  Hola, user main, sección pruebasUser
+                </div>
+                </>
+            }/>
+            <Route path="/convocatoriasUser" element={
+              <>
+                <div>
+                  Hola, user main, sección convocatoriasUser
+                </div>
+                </>
+            }/>
+            
           </Route>
 
 

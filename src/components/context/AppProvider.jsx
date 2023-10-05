@@ -16,7 +16,6 @@ export function AppProvider({children}) {
   const [imagen, setImagen] = useState()
 
   useEffect(()=>{
-    //setToken(localStorage.getItem("token"))
     setImagen(localStorage.getItem("imagen"))
     if(token){
       decodeToken("token")

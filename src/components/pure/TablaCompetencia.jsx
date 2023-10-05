@@ -82,7 +82,10 @@ export default function TablaCompetencia({ columns, items, path, msg, showButton
   return (
     <div>
       {showButton && (
-        <Flex align={"center"} flexDir={["column", "column", "row"]} gap={"15px"} justifyContent={"space-between"}>
+        <Flex 
+
+
+        align={"center"} flexDir={["column", "column", "row"]} gap={"15px"} justifyContent={"space-between"}>
         <Btn
           msg={"Agregar Competencia"}
           leftIcon={<MdAdd/>}
@@ -90,7 +93,6 @@ export default function TablaCompetencia({ columns, items, path, msg, showButton
           w={["100%", "250px"]}
           path={"/formularioCompetencia"}
         >
-          
         </Btn>
         <Flex align={"center"} gap={"5px"}>
         <FormLabel id="switch" m={"0"}>Mostrar Inactivos</FormLabel> 
@@ -102,7 +104,10 @@ export default function TablaCompetencia({ columns, items, path, msg, showButton
         </Flex>
         </Flex>
       )}
-      <Box mb="15px" mt="20px" p="20px" borderRadius="8px" bgColor="white">
+      <Box 
+        boxShadow={"rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;"}
+        mb="15px" mt="20px" p="20px" borderRadius="8px" bgColor="white">
+
         <Flex
           w={{
             base: "240px",

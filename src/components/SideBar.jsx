@@ -2,29 +2,21 @@ import React, { useState, useContext, useEffect } from 'react'
 import {Flex, Box, useMediaQuery} from "@chakra-ui/react"
 import SideItem from './pure/SideItem'
 import { AiOutlineFlag,
-         AiOutlineHome,
-         AiOutlineAppstore, 
-         AiOutlineCalendar, 
-         AiOutlineTeam,
-         AiOutlineFileAdd,
-         AiOutlineBook } from 'react-icons/ai';
+  AiOutlineHome,
+  AiOutlineAppstore, 
+  AiOutlineCalendar, 
+  AiOutlineTeam,
+  AiOutlineFileAdd,
+  AiOutlineBook } from 'react-icons/ai';
 
 import {BiLogOut} from "react-icons/bi"
-import { AppContext } from './context/AppProvider';
-import jwt_decode from "jwt-decode"
+import { AppContext} from './context/AppProvider';
 
 export default function SideBar({isOpen}) {
 
-  const [role, setRole] = useState(null);
-  const { token } = useContext(AppContext);
+  const { role } = useContext(AppContext);
 
-  useEffect(() => {
-    if (token) {
-      const decode = jwt_decode(token);
-      const rol = decode.tipo;
-      setRole(rol);
-    }
-  }, [token]);
+
 
   const navItems = [
     {icon:AiOutlineHome,msg:"Panel Principal",active:false,path:["/home","/cambiarImagen","/editarInformacion","/cambiarContrasenia"]},
@@ -37,19 +29,18 @@ export default function SideBar({isOpen}) {
   ]
 
   const userNavItems = [
-    {icon:AiOutlineHome,msg:"Panel Principal",active:false,path:"/home"},
-    {icon:AiOutlineFileAdd,msg:"Pruebas",active:false,path:"/pruebas"},
-    {icon:AiOutlineBook,msg:"Convocatorias",active:false, path:"/convocatorias"},
+    {icon:AiOutlineHome,msg:"Panel Principal",active:false,path:["/user"]},
+    {icon:AiOutlineFileAdd,msg:"Pruebas",active:false,path:["/pruebasUser"]},
+    {icon:AiOutlineBook,msg:"Convocatorias",active:false, path:["/convocatoriasUser"]},
   ]
-  
-  // const [items, setItems] = useState(navItems)
-  const items = role ==="Director" ? navItems : userNavItems
+
+  const items = role && role ==="Director" ? navItems : userNavItems
   const [w] = useMediaQuery("(min-width: 768px)");
- 
+
 
   return (
     <>
-        <Flex 
+      <Flex 
         boxSizing='border-box'
         direction={"column"}
         position={"absolute"}
@@ -62,19 +53,19 @@ export default function SideBar({isOpen}) {
         transform={ isOpen ? "translateX(-100%)" : "translateX(0px)"}
         transition={"all 0.5s"}
         overflow={"hidden"}
-        >
+      >
         <Flex
           direction={"column"}
           width={"100%"}
           gap={"15px"} 
         >
 
-        {
-          items.map( ({icon, msg, active, path}, i) => <SideItem key={i} path={path} icon={icon} active={active} msg={w ? msg : ""} tamanio={w} index={i}/> ) 
-        }
+          {
+            items.map( ({icon, msg, active, path}, i) => <SideItem key={i} path={path} icon={icon} active={active} msg={w ? msg : ""} tamanio={w} index={i}/> ) 
+          }
         </Flex>
         <SideItem icon={BiLogOut} msg={w ? "Cerrar Sesión" : ""} index={10000}></SideItem>
-        </Flex>
+      </Flex>
     </>
   )
 }
