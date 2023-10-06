@@ -129,7 +129,7 @@ export default function EditarInformacionAdmin() {
                       id="nombre"
                       name="nombre"
                       type="text"
-                      w={["100%", "100%", "160px", "185px", "210px"]}
+                      w={"100%"}
                     />
                     <FormErrorMessage>{errors.nombre}</FormErrorMessage>
                   </FormControl>
@@ -146,13 +146,13 @@ export default function EditarInformacionAdmin() {
                       id="apellido"
                       name="apellido"
                       type="text"
-                      w={["100%", "100%", "160px", "185px", "210px"]}
+                      w={"100%"}
                     />
                     <FormErrorMessage>{errors.apellido}</FormErrorMessage>
                   </FormControl>
 
                   <Button
-                    w={["100%", "100%", "160px", "185px", "210px"]}
+                    w={"100%"}
                     type="submit"
                   >
                     Enviar

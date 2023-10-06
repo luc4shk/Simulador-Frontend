@@ -29,7 +29,7 @@ export default function SideBar({isOpen}) {
   ]
 
   const userNavItems = [
-    {icon:AiOutlineHome,msg:"Panel Principal",active:false,path:["/user"]},
+    {icon:AiOutlineHome,msg:"Panel Principal",active:false,path:["/user", "/editarInformacionEstudiante","/cambiarContraseniaEstudiante"]},
     {icon:AiOutlineFileAdd,msg:"Pruebas",active:false,path:["/pruebasUser"]},
     {icon:AiOutlineBook,msg:"Convocatorias",active:false, path:["/convocatoriasUser"]},
   ]

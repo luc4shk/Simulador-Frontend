@@ -35,6 +35,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Layout from "../components/container/Layout";
 import PrincipalPageUser from "../pages/User/principal/PrincipalPageUser";
 import EditarInfoUser from "../pages/User/principal/EditarInfoUser";
+import ConvocatoriaUser from "../pages/User/convocatorias/ConvocatoriaUser";
 export default function AppRouter() {
 
   const { token, user, role} = useContext(AppContext);
@@ -150,14 +151,7 @@ export default function AppRouter() {
                 </>
               }
             />
-            <Route
-              path="/convocatoriasUser"
-              element={
-                <>
-                  <div>Hola, user main, sección convocatoriasUser</div>
-                </>
-              }
-            />
+            <Route path="/convocatoriasUser" element={<ConvocatoriaUser/>}/>
           </Route>
 
           <Route
