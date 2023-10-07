@@ -12,7 +12,7 @@ import {
 import { Formik, Form, Field } from "formik";
 import { useParams } from "react-router-dom";
 import * as Yup from "yup";
-import { useLocation, useRoute } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppProvider";
 import axiosApi from "../../utils/config/axios.config";
 import { toast, Toaster } from "react-hot-toast";
@@ -22,8 +22,8 @@ export default function FormularioEditarCompetencia() {
   const {id} = useParams()
   const { token } = useContext(AppContext);
   const [datos, setDatos] = useState();
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(true);
-  const [loc, setLoc] = useLocation();
 
   const actualizarCompetencia = async (nombre, descripcion, estado, id) => {
     let body = {
@@ -38,12 +38,11 @@ export default function FormularioEditarCompetencia() {
       }
     }).catch((e) => {
       toast.error(e.response.data.error);
-    }).finally(()=>{
-    setLoc("/competencias");
-    });
+    })
 
     if (response.status === 200) {
       toast.success("¡Competencia actualizada!");
+      navigate("/competencias")
     }
     if(body.estado===false){
       toast("¡Todas las categorías asociadas a esta competencia se desactivaran!", {
@@ -74,7 +73,6 @@ export default function FormularioEditarCompetencia() {
     obtenerCompetenciaPorId(id);
   }, []);
 
-  const estados = ["Activo", "Inactivo"];
 
   const validationSchema = Yup.object().shape({
     nombre: Yup.string().required("El nombre es requerido").max(25, "Máximo 25 caracteres").min(5, "Mínimo 5 caracteres"),

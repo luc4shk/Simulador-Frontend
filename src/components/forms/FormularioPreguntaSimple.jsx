@@ -12,6 +12,8 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
+  AbsoluteCenter,
+  Divider,
 } from "@chakra-ui/react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Boton from "../pure/Boton";
@@ -22,6 +24,7 @@ import { toast } from "react-hot-toast";
 import * as Yup from "yup";
 import useLocation from "wouter/use-location";
 const categorias = ["Inglés", "Español", "Análisis", "Matemáticas"];
+import Btn from "../pure/Btn";
 
 export default function FormularioSimple() {
   const [archivo, setArchivo] = useState(null);
@@ -31,12 +34,12 @@ export default function FormularioSimple() {
   const BRef = useRef();
   const CRef = useRef();
   const DRef = useRef();
-  const [loc, setLoc] = useLocation()
-  const [categorias, setCategorias] = useState()
+  const [loc, setLoc] = useLocation();
+  const [categorias, setCategorias] = useState();
 
   const { token } = useContext(AppContext);
 
-    const obtenerCategorias = async () => {
+  const obtenerCategorias = async () => {
     let response = await axiosApi
       .get("api/categoria/?estado=1", {
         headers: {
@@ -72,7 +75,16 @@ export default function FormularioSimple() {
     setFieldValue("archivo", inputRef.current.files[0]);
   };
 
-  const agregarPregunta = async (texto_pregunta, semestre, A, B, C, D, respuesta, categoria_id) => {
+  const agregarPregunta = async (
+    texto_pregunta,
+    semestre,
+    A,
+    B,
+    C,
+    D,
+    respuesta,
+    categoria_id
+  ) => {
     let body = {
       texto_pregunta: texto_pregunta,
       semestre: semestre,
@@ -83,19 +95,22 @@ export default function FormularioSimple() {
       respuesta: respuesta,
       categoria_id: categoria_id,
     };
-    let response = await axiosApi.post("/api/question/createQuestion",body,{
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    }).catch((e) => {
-      toast.error(e.response.data.error);
-    }).finally(()=>{
-      setLoc("/preguntas");
-    });
+    let response = await axiosApi
+      .post("/api/question/createQuestion", body, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .catch((e) => {
+        toast.error(e.response.data.error);
+      })
+      .finally(() => {
+        setLoc("/preguntas");
+      });
 
     if (response.status === 200) {
       toast.success("¡Pregunta agregada correctamente!");
-    };
+    }
   };
 
   const validationSchema = Yup.object().shape({
@@ -105,10 +120,19 @@ export default function FormularioSimple() {
     opcionC: Yup.string().required("La opción C es requerida"),
     opcionD: Yup.string().required("La opción D es requerida"),
     respuesta: Yup.string()
-    .required("La respuesta es requerida")
-    .test("opcion-valid", "La respuesta debe estar dentro de las opciones escogidas", function (value) {
-      return value.toString() === this.resolve(Yup.ref("opcionA")) || value.toString() === this.resolve(Yup.ref("opcionB")) || value.toString() === this.resolve(Yup.ref("opcionC")) || value.toString() === this.resolve(Yup.ref("opcionD"));
-    }),
+      .required("La respuesta es requerida")
+      .test(
+        "opcion-valid",
+        "La respuesta debe estar dentro de las opciones escogidas",
+        function (value) {
+          return (
+            value.toString() === this.resolve(Yup.ref("opcionA")) ||
+            value.toString() === this.resolve(Yup.ref("opcionB")) ||
+            value.toString() === this.resolve(Yup.ref("opcionC")) ||
+            value.toString() === this.resolve(Yup.ref("opcionD"))
+          );
+        }
+      ),
     semestre: Yup.string().required("El semestre es requerido"),
     categoria: Yup.string().required("La categoría es requerida"),
   });
@@ -128,9 +152,9 @@ export default function FormularioSimple() {
       .required("El archivo es requerido"),
   });
 
-  useEffect(()=>{
-    obtenerCategorias()
-  })
+  useEffect(() => {
+    obtenerCategorias();
+  }, []);
 
   return (
     <Box>
@@ -159,8 +183,26 @@ export default function FormularioSimple() {
             categoria: "",
           }}
           validationSchema={validationSchema}
-          onSubmit={({enunciado,opcionA,opcionB,opcionC,opcionD,respuesta,semestre,categoria}) => {
-            agregarPregunta(enunciado,semestre,opcionA,opcionB,opcionC,opcionD,respuesta,categoria)
+          onSubmit={({
+            enunciado,
+            opcionA,
+            opcionB,
+            opcionC,
+            opcionD,
+            respuesta,
+            semestre,
+            categoria,
+          }) => {
+            agregarPregunta(
+              enunciado,
+              semestre,
+              opcionA,
+              opcionB,
+              opcionC,
+              opcionD,
+              respuesta,
+              categoria
+            );
           }}
         >
           {(props) => {
@@ -287,20 +329,17 @@ export default function FormularioSimple() {
                   </FormControl>
                 </Box>
 
-                <Button
-                  w={"100%"}
-                  bgColor={"principal.100"}
-                  textColor={"white"}
-                  mt={"30px"}
-                  type="sumbit"
-                  _hover={{ backgroundColor: "fondo.100" }}
-                >
-                  Guardar
-                </Button>
+                <Btn w={"100%"} mt={"15px"} isSubmit={true} msg={"Guardar"} />
               </Form>
             );
           }}
         </Formik>
+        <Box position="relative" padding="10">
+          <Divider colorScheme="yellow" borderColor={"black"}/>
+          <AbsoluteCenter bg="white" px="4">
+            Agregar mediante Excel
+          </AbsoluteCenter>
+        </Box>
         <Formik
           initialValues={initialValues2}
           validationSchema={validationSchema2}
@@ -324,8 +363,7 @@ export default function FormularioSimple() {
                           ref={inputRef}
                           name="archivo"
                           variant="filled"
-                          mb="10px"
-                          mt="10px"
+                          mt={["20px", "20px", "10px"]}
                           w={{
                             sm: "100%",
                             md: "200px",
@@ -342,7 +380,7 @@ export default function FormularioSimple() {
                     </Field>
                     <FormErrorMessage>{errors.archivo}</FormErrorMessage>
                   </FormControl>
-                  <Button
+                  {/* <Button
                     bgColor="principal.100"
                     textColor="white"
                     w={{
@@ -357,7 +395,14 @@ export default function FormularioSimple() {
                     type="submit"
                   >
                     Guardar
-                  </Button>
+                  </Button> */}
+                  <Btn
+                    mt={"10px"}
+                    isSubmit={true}
+                    colorScheme={"blue"}
+                    msg={"Guardar"}
+                    w={"100%"}
+                  />
                 </Flex>
               </Form>
             );

@@ -19,6 +19,7 @@ import axiosApi from "../../utils/config/axios.config";
 import { AppContext } from "../context/AppProvider";
 import { toast } from "react-hot-toast";
 import useLocation from "wouter/use-location";
+import Btn from "../pure/Btn"
 import * as Yup from "yup";
 
 
@@ -162,7 +163,7 @@ export default function FormularioPreguntaImagen() {
                     <Box
                       display="flex"
                       flexDirection={["column","column","row"]}
-                      mt={"30px"}
+                      mt={"10px"}
                       width={"100%"}
                       alignItems={"center"}
                       gap={"20px"}
@@ -184,6 +185,8 @@ export default function FormularioPreguntaImagen() {
                             type="file"
                             accept=".png, .jpeg"
                             name="imagen"
+                            h={"40px"}
+                            borderRadius={"0px"}
                             ref={inputRef}
                             variant="unstyled"
                             onChange={(event) => {
@@ -203,7 +206,6 @@ export default function FormularioPreguntaImagen() {
                       >
                         <Field
                           as={Input}
-                          mt="10px"
                           id="semestre"
                           name="semestre"
                         />
@@ -227,7 +229,6 @@ export default function FormularioPreguntaImagen() {
                           id="categoria"
                           name="categoria"
                           border="2px solid gray"
-                          mt="10px"
                         >
                           <option>Seleccione una categoria</option>
                           {categorias && categorias.map((categoria, index) => (
@@ -254,6 +255,7 @@ export default function FormularioPreguntaImagen() {
                 </Box>
                 <Box
                   mt="10px"
+                  gap={"10px"}
                   display="flex"
                   flexDirection="column"
                   justifyContent="center"
@@ -293,13 +295,12 @@ export default function FormularioPreguntaImagen() {
                   </FormControl>
                 </Box>
                 <Box display="flex" justifyContent="center">
-                  <Button
-                    type="submit" 
-                    mt="30px"
+                  <Btn 
+                    isSubmit={true} 
+                    mt={"15px"}
+                    msg={"Agregar"}
                     w={"100%"}
-                    bgColor={"principal.100"}
-                    textColor={"white"}
-                  >Agregar</Button>
+                  />
                 </Box>
               </Form>
             );

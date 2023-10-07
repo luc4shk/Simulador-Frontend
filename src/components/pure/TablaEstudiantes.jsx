@@ -75,6 +75,7 @@ export default function TablaEstudiantes({ columns, items, path, msg, showButton
         toast.error(e.response.data.error)
      })
      setEstudiantes(response.data)
+     console.log(response.data)
   }
 
  useEffect(()=>{

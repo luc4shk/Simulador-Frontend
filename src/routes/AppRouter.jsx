@@ -1,7 +1,11 @@
-
-
 import React, { useEffect, useContext } from "react";
-import { HashRouter as Router, Routes, Route, useLocation, Navigate  } from "react-router-dom"
+import {
+  HashRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 import PrincipalPage from "../pages/Admin/principal/PrincipalPage";
 import Competencias from "../pages/Admin/competencias/Competencias";
 import ErrorPage from "../pages/404/ErrorPage";
@@ -36,11 +40,9 @@ import Layout from "../components/container/Layout";
 import PrincipalPageUser from "../pages/User/principal/PrincipalPageUser";
 import EditarInfoUser from "../pages/User/principal/EditarInfoUser";
 import ConvocatoriaUser from "../pages/User/convocatorias/ConvocatoriaUser";
+import PruebasUser from "../pages/User/pruebas/PruebasUser";
 export default function AppRouter() {
-
-  const { token, user, role} = useContext(AppContext);
-
-
+  const { token, user, role } = useContext(AppContext);
 
   return (
     <>
@@ -63,64 +65,43 @@ export default function AppRouter() {
             <Route path="/preguntas" element={<Preguntas />}></Route>
             <Route path="/estudiantes" element={<Estudiantes />}></Route>
             <Route path="/convocatorias" element={<Convocatorias />}></Route>
-            <Route
-              path="/formularioCompetencia"
-              element={<AgregarCompetencia />}
-            ></Route>
-            <Route
-              path="/formularioCategoria"
-              element={<AgregarCategoria />}
-            ></Route>
-            <Route
-              path="/tipoPregunta"
-              element={<SeleccionarTipoPregunta />}
-            ></Route>
+            <Route path="/formularioCompetencia" element={<AgregarCompetencia />}/>
+            <Route path="/formularioCategoria" element={<AgregarCategoria />} />
+            <Route path="/tipoPregunta" element={<SeleccionarTipoPregunta />} />
             <Route
               path="/formularioPreguntaSimple"
               element={<PreguntaSimple />}
-            ></Route>
+            />
             <Route
               path="/formularioPreguntaImagen"
               element={<PreguntaImagen />}
-            ></Route>
+            />
             <Route
               path="/formularioConvocatoria"
               element={<AgregarConvocatoria />}
-            ></Route>
+            />
             <Route path="/crearPrueba" element={<AgregarPrueba />}></Route>
             <Route
               path="/cambiarContrasenia"
               element={<CambiarContrasenia />}
-            ></Route>
+            />
             <Route path="/cambiarImagen" element={<CambiarImagen />}></Route>
-            <Route
-              path="/editarInformacion"
-              element={<EditarInformacion />}
-            ></Route>
+            <Route path="/editarInformacion" element={<EditarInformacion />} />
             <Route
               path="/editarCompetencia/:id"
               element={<EditarCompetencia />}
-            ></Route>
-            <Route
-              path="/editarCategoria/:id"
-              element={<EditarCategoria />}
-            ></Route>
-            <Route
-              path="/editarPregunta/:id"
-              element={<EditarPregunta />}
-            ></Route>
+            />
+            <Route path="/editarCategoria/:id" element={<EditarCategoria />} />
+            <Route path="/editarPregunta/:id" element={<EditarPregunta />} />
             <Route
               path="/editarEstudiante/:id"
               element={<EditarEstudiante />}
-            ></Route>
-            <Route
-              path="/editarPrueba/:id"
-              element={<EditarEstudiante />}
-            ></Route>
+            />
+            <Route path="/editarPrueba/:id" element={<EditarEstudiante />} />
             <Route
               path="/editarConvocatoria/:id"
               element={<EditarConvocatoria />}
-            ></Route>
+            />
           </Route>
 
           <Route
@@ -134,7 +115,10 @@ export default function AppRouter() {
             }
           >
             <Route path="/user" element={<PrincipalPageUser />}></Route>
-            <Route path="/editarInformacionEstudiante" element={<EditarInfoUser/>}></Route>
+            <Route
+              path="/editarInformacionEstudiante"
+              element={<EditarInfoUser />}
+            ></Route>
             <Route
               path="/puntaje"
               element={
@@ -143,21 +127,11 @@ export default function AppRouter() {
                 </>
               }
             />
-            <Route
-              path="/pruebasUser"
-              element={
-                <>
-                  <div>Hola, user main, sección pruebasUser</div>
-                </>
-              }
-            />
-            <Route path="/convocatoriasUser" element={<ConvocatoriaUser/>}/>
+            <Route path="/pruebasUser" element={<PruebasUser />} />
+            <Route path="/convocatoriasUser" element={<ConvocatoriaUser />} />
           </Route>
 
-          <Route
-            path="/newPassword/:id/:token"
-            element={<NewPassword />}
-          ></Route>
+          <Route path="/newPassword/:id/:token" element={<NewPassword />} />
           <Route path="/" element={<Login />}></Route>
           <Route path="/recuperarEmail" element={<EmailRecuperación />}></Route>
           <Route path="*" element={<ErrorPage role={role} />} />

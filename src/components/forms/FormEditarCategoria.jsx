@@ -7,13 +7,14 @@ import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/react";
 import Boton from "../pure/Boton";
 import { toast, Toaster } from "react-hot-toast";
 import axiosApi from "../../utils/config/axios.config";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate} from "react-router-dom";
 import { AppContext } from "../context/AppProvider";
+import Btn from "../pure/Btn";
 
 export default function FormularioEditarCategoria() {
-  const [match, params] = useRoute("/editarCategoria/:id");
   const {id} = useParams()
   const { token } = useContext(AppContext);
+  const navigate = useNavigate()
   const [datos, setDatos] = useState({});
   const [loading, setLoading] = useState(true);
   const [loading2, setLoading2] = useState(true);
@@ -65,15 +66,13 @@ export default function FormularioEditarCategoria() {
       .catch((e) => {
         toast.error(e.response.data.error);
       })
-      .finally(() => {
-        setLocation("/categorias");
-      });
 
     if (response.status === 200) {
       toast.success("¡Categoría actualizada correctamente!");
+      navigate("/categorias")
+      
     }
 
-    "" ;
   };
 
 
@@ -110,7 +109,6 @@ export default function FormularioEditarCategoria() {
 
   useEffect(() => {
     if (competencias && competencias.length > 0) {
-      //getCategoriaById(params.id);
       getCategoriaById(id);
     }
     console.log(id)
@@ -139,12 +137,13 @@ export default function FormularioEditarCategoria() {
             enableReinitialize={true}
             validationSchema={validationSchema}
             onSubmit={({ nombre, descripcion, estado, competencia }) => {
+              const estadoValue = estado === "true";
+              const competenciaInt = parseInt(competencia)
               actualizarCategoria(
                 nombre,
                 descripcion,
-                competencia,
-                estado,
-                //params.id
+                competenciaInt,
+                estadoValue,
                 id
               );
             }}
@@ -268,16 +267,12 @@ export default function FormularioEditarCategoria() {
                         </FormErrorMessage>
                       </FormControl>
                     </Box>
-                    <Button
-                      bgColor={"principal.100"}
-                      _hover={{ backgroundColor: "fondo.100" }}
-                      color={"white"}
-                      w={["200px", "300px", "350px", "400px"]}
-                      mt="30px"
-                      type="submit"
-                    >
-                      Guardar
-                    </Button>
+                    <Btn
+                    isSubmit={true}
+                    w={["200px", "300px", "350px", "400px"]}
+                    mt={"20px"}
+                    msg={"Guardar"}
+                    />
                   </Box>
                 </Form>
               );

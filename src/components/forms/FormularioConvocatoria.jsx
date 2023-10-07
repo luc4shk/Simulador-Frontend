@@ -16,6 +16,7 @@ import { AppContext } from "../context/AppProvider";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import Btn from "../pure/Btn";
 
 export default function FormularioConvocatoria() {
   const inputRef = useRef();
@@ -267,17 +268,12 @@ export default function FormularioConvocatoria() {
                     </FormControl>
                   </Flex>
                 </Box>
-
-                <Button
-                  w={"100%"}
-                  bgColor={"principal.100"}
-                  textColor={"white"}
-                  mt={"30px"}
-                  type="sumbit"
-                  _hover={{ backgroundColor: "fondo.100" }}
-                >
-                  Guardar
-                </Button>
+                <Btn
+                isSubmit={true}
+                w={"100%"}
+                mt={"15px"}
+                msg={"Guardar"}
+                />
               </Form>
             );
           }}
