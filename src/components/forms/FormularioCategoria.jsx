@@ -42,7 +42,6 @@ export default function FormularioCategoria() {
       },
     }).catch((e)=>{
       toast.error(e.response.data.error)
-      console.log(e)
     }).finally(()=>{
       navigate("/categorias")
     })

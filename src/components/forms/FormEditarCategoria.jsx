@@ -111,7 +111,6 @@ export default function FormularioEditarCategoria() {
     if (competencias && competencias.length > 0) {
       getCategoriaById(id);
     }
-    console.log(id)
   }, [competencias]);
 
 

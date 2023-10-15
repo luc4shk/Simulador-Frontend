@@ -61,7 +61,6 @@ export default function FormEditarConvocatoria() {
         toast.success("¡La convocatoria se actualizón correctamente!")
     }
 
-    console.log(response)
   }
 
   const getConvocatoriaById = async (id) =>{
@@ -79,7 +78,6 @@ export default function FormEditarConvocatoria() {
     const fechaFin = convocatoria.fecha_fin
       ? convocatoria.fecha_fin.toString().replace("T00:00:00.000Z", "")
       : "";
-    console.log(fechaIni)
     setDatos({
          nombre: convocatoria.nombre || "",
       prueba_id: convocatoria.prueba_id || "",
@@ -88,7 +86,6 @@ export default function FormEditarConvocatoria() {
       fecha_fin: fechaFin ? fechaFin : null,
     })
     setLoading(false)
-    console.log(datos)
   }
 
  

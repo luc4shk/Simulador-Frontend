@@ -93,7 +93,6 @@ export default function EditarInformacionAdmin() {
         initialValues={data}
         validationSchema={validationSchema}
         onSubmit={({ nombre, apellido }) => {
-          console.log({ nombre, apellido });
           actualizarDatos(nombre, apellido);
         }}
       >

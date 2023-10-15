@@ -70,7 +70,6 @@ export default function FormularioSimple() {
       toast.success(`¡Archivo cargado correctamente!\n${response.data.message}`);
       navigate("/preguntas")
     }
-    console.log(response.data)
   };
 
   const handleArchivoSeleccionado = (e, setFieldValue) => {

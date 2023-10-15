@@ -40,7 +40,6 @@ import axiosApi from "../../utils/config/axios.config";
       toast.success(response.data.message)
       navigate("/")
     }
-    console.log(response)
   }
      
 

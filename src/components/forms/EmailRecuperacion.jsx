@@ -32,7 +32,6 @@ import Btn from "../pure/Btn";
     if(response.status === 200){
       toast.success("¡Mensaje enviado correctamente!")
     }
-    console.log(response)
   }
   
     const validationSchema = Yup.object().shape({

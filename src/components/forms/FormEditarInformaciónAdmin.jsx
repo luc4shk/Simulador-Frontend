@@ -87,7 +87,6 @@ const actualizarDatos = async (nombre, apellido, direccion, documento, celular, 
 
     ).catch((e)=>{
       toast.error(e.error.data.error)
-      console.log(e.reponse.data.error)
     })
 
     if(response.status === 200){

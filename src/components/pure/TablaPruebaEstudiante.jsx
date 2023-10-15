@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Table,
   Thead,
@@ -11,48 +11,33 @@ import {
   Button,
   Icon,
   useEditable,
+  FormLabel,
+  Switch,
+  Text
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 import Boton from "../pure/Boton";
-import { useRef, useContext } from "react";
+import { MdAdd, MdChevronLeft, MdChevronRight } from "react-icons/md";
 import axiosApi from "../../utils/config/axios.config";
 import { AppContext } from "../context/AppProvider";
-import { toast } from "react-hot-toast";
-import { RiEdit2Fill } from "react-icons/ri";
-import { MdAdd, MdChevronLeft, MdChevronRight } from "react-icons/md";
-import Btn from "./Btn";
+import { AiOutlineEye} from "react-icons/ai";
+import { Link } from "react-router-dom";
 import Paginacion from "./Paginacion";
+import Btn from "./Btn";
 
-export default function TablaConvocatoria({ columns, items, path, msg, showButton }) {
+export default function TablaPruebaEstudiante({ columns,pr, items, path, msg, showButton }) {
   const [currentPage, setCurrentPage] = useState(0);
   const [indexI, setIndexI] = useState(0);
   const [indexF, setIndexF] = useState(5);
+  const [showActive, setShowActive] = useState(false);
+  const [pruebas,setPruebas] = useState(pr);
+  const {token} = useContext(AppContext)
   const itemsPerPage = 5;
-  const [convocatorias,setConvocatorias] = useState()
   const indexOfLastItem = (currentPage + 1) * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const { token } = useContext(AppContext);
 
-  const currentItems = convocatorias && convocatorias.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = pruebas && pruebas.slice(indexOfFirstItem, indexOfLastItem);
 
-  const totalPages = convocatorias && Math.ceil(convocatorias.length / itemsPerPage);
-
-
-  const getConvocatorias = async () =>{
-    let response = await axiosApi.get("/api/convocatoria",{
-       headers:{
-        Authorization:"Bearer " + token,
-      }
-    }).catch(()=>{
-      toast.error("No se pueden obtener las convocatorias!")
-    })
-    setConvocatorias(response.data)
-  }
-
-  useEffect(()=>{
-    getConvocatorias()
-  },[])
-
+  const totalPages = pruebas && Math.ceil(pruebas.length / itemsPerPage);
 
   const handlePageChange = (selected) => {
     if (selected >= indexF) {
@@ -82,22 +67,38 @@ export default function TablaConvocatoria({ columns, items, path, msg, showButto
     setIndexI(indexI - 5);
     setIndexF(indexF - 5);
   };
-
   return (
-    <Box>
+    <div>
       {showButton && (
-        <Btn
-          msg={msg}
-          leftIcon={<MdAdd />}
-          path={path}
-          w={["100%", "250px"]}
-        />
+
+        <Flex align={"center"} flexDir={["column", "column", "row"]} gap={"15px"} justifyContent={"space-between"}>
+          <Btn
+            msg={msg}
+            leftIcon={<MdAdd/>}
+            path={path}
+            w={["100%", "250px"]}
+
+          >
+
+          </Btn>
+
+          <Flex align={"center"} gap={"5px"}>
+            <FormLabel id="switch" m={"0"}>Mostrar Inactivos</FormLabel>
+            <Switch id="switch" colorScheme="cyan" onChange={(e) => {
+              setCurrentPage(0)
+              setShowActive(!showActive)
+              showActive === true ? obtenerActivos(1) : obtenerActivos(0)
+            }} />
+          </Flex>
+
+
+        </Flex>
+
       )}
-      <Box mb="15px" mt="20px" p="20px" borderRadius="8px" bgColor="white"
+      <Box mb="15px" mt="20px" p="20px" borderRadius="8px" bgColor="white" 
         boxShadow={"rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;"}
       >
         <Flex
-          // w={["190px", "350px", "510px", "700px"]}
           w={{
             base: "240px",
             sm: "310px",
@@ -130,34 +131,38 @@ export default function TablaConvocatoria({ columns, items, path, msg, showButto
                 </Tr>
               </Thead>
               <Tbody>
-                {convocatorias && currentItems.map((item, index) => (
+                {pruebas && currentItems.map((item, index) => (
                   <Tr key={index}>
-                    
-                      <Td>
+                    <Td>
                       <Box w={"100%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                         {item.id}
                       </Box>
-                      </Td>
-                      <Td>
-                        {item.nombre}
-                      </Td>
-                       <Td>
-                      <Box w={"100%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-                        {item.estado ? "Activo" : "Inactivo"}
+                    </Td>
+                    <Td>{item.nombre}</Td>
+                    <Td>
+                      <Box w={"100%"} display={"flex"} justifyContent={"center"} alignItems={"center"} flexDir={"column"}>
+                        {item.competencias.map((c, index) =><Box key={index}>{c}</Box>)}
                       </Box>
-                      </Td>
-                       <Td>
-                        {item.fecha_inicio.toString().replace("T00:00:00.000Z","")}
-                      </Td>
-                      <Td>
-                        {item.fecha_fin.toString().replace("T00:00:00.000Z","")}
-                      </Td>
-                         <Td>{
-                        <Button variant={"unstyled"} as={Link} to={`/editarConvocatoria/${item.id}`}>
-                        <Icon w={"20px"} h={"20px"} as={RiEdit2Fill}/>
-                        </Button>
-                        }</Td>
-
+                    </Td>
+                    <Td>
+                      <Box w={"100%"} display={"flex"} alignItems={"center"} justifyContent={"center"} flexDir={"column"}>
+                        {
+                          item.categorias.map((data,index)=>(
+                            <Box>{data}</Box>
+                          ))
+                        }
+                      </Box>
+                    </Td>
+                    <Td>
+                      <Box w={"100%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                        {item.puntaje}
+                      </Box>
+                    </Td>
+                    <Td>
+                      <Button as={Link} display={"flex"} h={"30px"} justifyItems={"center"} justifyContent={"center"} backgroundColor={"segundo.100"} to={`#`}>
+                        <Icon color={"primero.100"}  as={AiOutlineEye}></Icon>
+                      </Button>
+                    </Td>
                   </Tr>
                 ))}
               </Tbody>
@@ -174,6 +179,6 @@ export default function TablaConvocatoria({ columns, items, path, msg, showButto
         atrasPage={atrasPage}
         adelantePage={adelantePage}
       />
-    </Box>
+    </div>
   );
 }

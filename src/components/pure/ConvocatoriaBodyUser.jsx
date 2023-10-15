@@ -9,35 +9,35 @@ export default function ConvocatoriaBodyUser(){
   >
   <Card>
   <CardHeader>
-    <Heading size='md'>Evaluación 1</Heading>
+    <Heading size='md'>Convocatoria 1</Heading>
   </CardHeader>
   <CardBody>
-    <Text>Esta evaluación evalúa tus habilidades en matemáticas.</Text>
+    <Text>Esta prueba evalúa tus habilidades en Programación.</Text>
   </CardBody>
   <CardFooter>
-    <Button as={Link}>Iniciar Prueba</Button>
+    <Button as={Link} to={"/presentarPrueba/1"}>Iniciar Prueba</Button>
   </CardFooter>
 </Card>
 <Card>
   <CardHeader>
-    <Heading size='md'>Evaluación 2</Heading>
+    <Heading size='md'>Convocatoria 2</Heading>
   </CardHeader>
   <CardBody>
-    <Text>Esta evaluación se enfoca en tus conocimientos en ciencias sociales.</Text>
+    <Text>Esta prueba se enfoca en tus conocimientos en Matemáticas.</Text>
   </CardBody>
   <CardFooter>
-    <Button as={Link}>Iniciar Prueba</Button>
+    <Button as={Link} to={"/presentarPrueba/2"}>Iniciar Prueba</Button>
   </CardFooter>
 </Card>
 <Card>
   <CardHeader>
-    <Heading size='md'>Evaluación 3</Heading>
+    <Heading size='md'>Convocatoria 3</Heading>
   </CardHeader>
   <CardBody>
-    <Text>Esta evaluación pondrá a prueba tus habilidades de administración.</Text>
+    <Text>Esta prueba pondrá a prueba tus habilidades de Amdinistración.</Text>
   </CardBody>
   <CardFooter>
-    <Button as={Link}>Iniciar Prueba</Button>
+    <Button as={Link} to={"/presentarPrueba/3"}>Iniciar Prueba</Button>
   </CardFooter>
 </Card>
 

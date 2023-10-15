@@ -42,6 +42,10 @@ import EditarInfoUser from "../pages/User/principal/EditarInfoUser";
 import ConvocatoriaUser from "../pages/User/convocatorias/ConvocatoriaUser";
 import PruebasUser from "../pages/User/pruebas/PruebasUser";
 import EditarPrueba from "../pages/Admin/pruebas/EditarPrueba";
+import CambiarContraseniaEstudiante from "../pages/User/principal/CambiarContraseniaEstudiante";
+import PresentarConvocatoria from "../pages/User/convocatorias/PresentarConvocatoria";
+import PresentarConvocatoriaMates from "../pages/User/convocatorias/PresentarConvocatoriaMates";
+import PresentarConvocatoriaAdministracion from "../pages/User/convocatorias/PresentarConvocatoriaAdministracion";
 export default function AppRouter() {
   const { token, user, role } = useContext(AppContext);
 
@@ -124,15 +128,14 @@ export default function AppRouter() {
               element={<EditarInfoUser />}
             ></Route>
             <Route
-              path="/puntaje"
-              element={
-                <>
-                  <div>Hola, user main, sección puntaje</div>
-                </>
-              }
+              path="/cambiarContraseniaEstudiante"
+              element={<CambiarContraseniaEstudiante/>}
             />
             <Route path="/pruebasUser" element={<PruebasUser />} />
             <Route path="/convocatoriasUser" element={<ConvocatoriaUser />} />
+            <Route path="/presentarPrueba/1" element={<PresentarConvocatoria/>}></Route>
+            <Route path="/presentarPrueba/2" element={<PresentarConvocatoriaMates/>}></Route>
+            <Route path="/presentarPrueba/3" element={<PresentarConvocatoriaAdministracion/>}></Route>
           </Route>
 
           <Route path="/newPassword/:id/:token" element={<NewPassword />} />

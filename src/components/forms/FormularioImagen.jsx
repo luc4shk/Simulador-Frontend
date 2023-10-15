@@ -18,7 +18,6 @@ export default function Formularioavatar() {
 
   useEffect(()=>{
       getAdmin()
-      console.log(data && data.imagen)
   },[])
 
  

@@ -17,7 +17,7 @@ import { AppContext } from "../context/AppProvider";
 import Boton from "../pure/Boton";
 import Btn from "../pure/Btn";
 
-export default function FormularioCambiarContraseña() {
+export default function FormularioPasswordEstudiante() {
 
   const {token,user} = useContext(AppContext)
   const navigate= useNavigate()
@@ -38,7 +38,7 @@ export default function FormularioCambiarContraseña() {
 
     if(response.status === 200){
       toast.success(`¡${response.data.message}!`)
-      navigate("/home")
+      navigate("/user")
     }
     "" 
   }

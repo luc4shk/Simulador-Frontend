@@ -22,7 +22,43 @@ import { AppContext } from "../context/AppProvider";
 import { AiOutlineEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Paginacion from "./Paginacion";
-import Btn from "./Btn";
+import Btn from "./Btn";const pruebas = [
+  {
+    id: 1,
+    nombre: "Prueba de Administración",
+    competencias: ["Genéricas", "Específicas"],
+    categorías: ["Sociales", "Inglés", "Matemáticas"],
+    puntaje: "50/100"
+  },
+  {
+    id: 2,
+    nombre: "Prueba de Ciencias",
+    competencias: ["Genéricas", "Científicas"],
+    categorías: ["Biología", "Química", "Física"],
+    puntaje: "60/100"
+  },
+  {
+    id: 3,
+    nombre: "Prueba de Historia",
+    competencias: ["Genéricas", "Históricas"],
+    categorías: ["Historia Antigua", "Historia Moderna", "Historia Contemporánea"],
+    puntaje: "45/100"
+  },
+  {
+    id: 4,
+    nombre: "Prueba de Literatura",
+    competencias: ["Genéricas", "Literarias"],
+    categorías: ["Poesía", "Novelas", "Teatro"],
+    puntaje: "55/100"
+  },
+  {
+    id: 5,
+    nombre: "Prueba de Geografía",
+    competencias: ["Genéricas", "Geográficas"],
+    categorías: ["Geografía Mundial", "Geografía Regional", "Geografía Física"],
+    puntaje: "48/100"
+  }
+];
 
 export default function TablaPrueba({ columns, items, path, msg, showButton }) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -172,7 +208,7 @@ export default function TablaPrueba({ columns, items, path, msg, showButton }) {
                         </Box>
                     </Td>
                     <Td>
-                      <Button as={Link} display={"flex"} h={"30px"} justifyItems={"center"} justifyContent={"cneter"} backgroundColor={"segundo.100"} to={`/editarPrueba/${item.id}`}>
+                      <Button as={Link} display={"flex"} h={"30px"} justifyItems={"center"} justifyContent={"center"} backgroundColor={"segundo.100"} to={`/editarPrueba/${item.id}`}>
                         <Icon color={"primero.100"} as={AiOutlineEdit}></Icon>
                       </Button>
                     </Td>
