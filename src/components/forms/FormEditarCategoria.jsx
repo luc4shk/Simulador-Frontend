@@ -23,10 +23,10 @@ export default function FormularioEditarCategoria() {
   const [location, setLocation] = useLocation();
 
   const validationSchema = Yup.object().shape({
-    nombre: Yup.string().required("El nombre es requerido"),
+    nombre: Yup.string().required("El nombre es requerido").matches("^(?! )[a-zA-ZÀ-ÖØ-öø-ÿ]+( [a-zA-ZÀ-ÖØ-öø-ÿ]+)*(?<! )$","El nombre solamente debe contener letras"),
     competencia: Yup.string().required("La competencia es requerida, verifique si la perteneciente a esta categoria esta desactivada"),
     estado: Yup.string().required("El estado es requerido"),
-    descripcion: Yup.string().required("La descripción es requerida"),
+    descripcion: Yup.string().required("La descripción es requerida").matches("^(?! )[a-zA-ZÀ-ÖØ-öø-ÿ.,\r\n0-9]+( [a-zA-ZÀ-ÖØ-öø-ÿ,.\r\n0-9]+)*(?<! )$","La descripción solamente debe contener letras"),
   });
 
   const obtenerCompetencias = async () => {
@@ -138,10 +138,11 @@ export default function FormularioEditarCategoria() {
             validationSchema={validationSchema}
             onSubmit={({ nombre, descripcion, estado, competencia }) => {
               const estadoValue = estado === "true";
+              let desc = descripcion.replace(/\n+/g,"\n")
               const competenciaInt = parseInt(competencia)
               actualizarCategoria(
                 nombre,
-                descripcion,
+                desc,
                 competenciaInt,
                 estadoValue,
                 id

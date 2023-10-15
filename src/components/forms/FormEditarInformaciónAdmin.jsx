@@ -67,18 +67,17 @@ export default function EditarInformacionAdmin() {
   }
  
 
-const actualizarDatos = async (nombre, apellido, direccion, email, documento, celular, telefono, codigo, estado=true) =>{
+const actualizarDatos = async (nombre, apellido, direccion, documento, celular, telefono, codigo, estado=true) =>{
 
     let response = await axiosApi.put(`api/user/admin/update`,{
         nombre:nombre,
         apellido:apellido,
         direccion: direccion,
-        email: email,
         documento: documento,
         celular: celular,
         telefono: telefono,
         codigo: codigo,
-        estado: true
+        estado: estado
     },{
        headers: {
             "Content-Type": "application/json",
@@ -87,7 +86,8 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
       }
 
     ).catch((e)=>{
-      toast.error("¡Error al actualizar los datos!")
+      toast.error(e.error.data.error)
+      console.log(e.reponse.data.error)
     })
 
     if(response.status === 200){
@@ -129,14 +129,15 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
     }
   
   const validationSchema = Yup.object().shape({
-    nombre: Yup.string().required("Campo requerido").max(25,"Maximo 25 dígitos").min(5,"Mínimo 5 digitos"),
-    apellido: Yup.string().required("Campo requerido").max(35,"Maximo 35 dígitos").min(5,"Mínimo 5 digitos"),
-    direccion: Yup.string().required("Campo requerido").max(60,"Maximo 60 dígitos").min(20,"Mínimo 20 digitos"),
+    nombre: Yup.string().required("Campo requerido").max(25,"Maximo 25 dígitos").min(5,"Mínimo 5 digitos").matches("^(?! )[a-zA-ZÀ-ÖØ-öø-ÿ]+( [a-zA-ZÀ-ÖØ-öø-ÿ]+)*(?<! )$","El nombre únicamente debe tene letras"),
+    apellido: Yup.string().required("Campo requerido").max(35,"Maximo 35 dígitos").min(5,"Mínimo 5 digitos").matches("^(?! )[a-zA-ZÀ-ÖØ-öø-ÿ]+( [a-zA-ZÀ-ÖØ-öø-ÿ]+)*(?<! )$","El apellido únicamente debe tene letras"),
+    direccion: Yup.string().required("Campo requerido").max(60,"Maximo 60 caracteres").min(20,"Mínimo 20 caracteres")
+    .matches("^(?! )[-a-zA-ZÀ-ÖØ-öø-ÿ0-9#.,]+( [-a-zA-ZÀ-ÖØ-öø-ÿ0-9#.,]+)*(?<! )$","s"),
     email: Yup.string().email("email inválido").required("Campo requerido"),
-    documento: Yup.string().required("Campo requerido").max(10,"Maximo 10 dígitos").min(7,"Mínimo 7 digitos"),
-    celular: Yup.string().required("Campo requerido").max(10,"Maximo 10 dígitos").min(10,"Mínimo 10 digitos"),
-    telefono: Yup.string().required("Campo requerido").max(7,"Maximo 7 dígitos").min(7,"Mínimo 7 digitos"),
-    codigo: Yup.string().required("Campo requerido").max(10,"Maximo 10 dígitos").min(7,"Mínimo 7 digitos"),
+    documento: Yup.string().required("Campo requerido").max(10,"Maximo 10 dígitos").min(7,"Mínimo 7 digitos").matches("^[0-9]+$","El documento solo debe contener numeros"),
+    celular: Yup.string().required("Campo requerido").max(10,"Maximo 10 dígitos").min(10,"Mínimo 10 digitos").matches("^[0-9]+$","El celular solo debe contener números"),
+    telefono: Yup.string().required("Campo requerido").max(7,"Maximo 7 dígitos").min(7,"Mínimo 7 digitos").matches("^[0-9]+$","El teléfono solo debe contener números"),
+    codigo: Yup.string().required("Campo requerido").max(7,"Maximo 7 dígitos").min(7,"Mínimo 7 digitos").matches("^[0-9]+$","El código solo puede contener numeros"),
   });
 
 
@@ -148,8 +149,8 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
       <Formik
         initialValues={data}
         validationSchema={validationSchema}
-        onSubmit={( {nombre, apellido, direccion, email, documento, celular, telefono, codigo } ) => {
-          actualizarDatos(nombre, apellido, direccion, email, documento, celular, telefono, codigo)
+        onSubmit={( {nombre, apellido, direccion, documento, celular, telefono, codigo } ) => {
+          actualizarDatos(nombre, apellido, direccion, documento, celular, telefono, codigo)
         }}
       >
         {(values) => {
@@ -235,7 +236,7 @@ const actualizarDatos = async (nombre, apellido, direccion, email, documento, ce
                       name="email"
                       type="text"
                       w={"100%"}
-                      editable
+                      disabled
                     />
                     <FormErrorMessage>{errors.email}</FormErrorMessage>
                     </FormControl>

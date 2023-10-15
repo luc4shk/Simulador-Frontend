@@ -12,7 +12,7 @@ import {
   Icon,
   useEditable,
 } from "@chakra-ui/react";
-import { Link } from "wouter";
+import { Link } from "react-router-dom";
 import Boton from "../pure/Boton";
 import { useRef, useContext } from "react";
 import axiosApi from "../../utils/config/axios.config";
@@ -21,6 +21,7 @@ import { toast } from "react-hot-toast";
 import { RiEdit2Fill } from "react-icons/ri";
 import { MdAdd, MdChevronLeft, MdChevronRight } from "react-icons/md";
 import Btn from "./Btn";
+import Paginacion from "./Paginacion";
 
 export default function TablaConvocatoria({ columns, items, path, msg, showButton }) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -84,7 +85,7 @@ export default function TablaConvocatoria({ columns, items, path, msg, showButto
   };
 
   return (
-    <div>
+    <Box>
       {showButton && (
         <Btn
           msg={msg}
@@ -93,7 +94,9 @@ export default function TablaConvocatoria({ columns, items, path, msg, showButto
           w={["100%", "250px"]}
         />
       )}
-      <Box mb="15px" mt="20px" p="20px" borderRadius="8px" bgColor="white">
+      <Box mb="15px" mt="20px" p="20px" borderRadius="8px" bgColor="white"
+        boxShadow={"rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;"}
+      >
         <Flex
           // w={["190px", "350px", "510px", "700px"]}
           w={{
@@ -119,7 +122,7 @@ export default function TablaConvocatoria({ columns, items, path, msg, showButto
                       key={index}
                       style={{
                         borderBottom: "2px solid",
-                        borderBottomColor: "#E7ADA2",
+                        borderBottomColor: "principal.100",
                       }}
                     >
                       {column}
@@ -132,13 +135,17 @@ export default function TablaConvocatoria({ columns, items, path, msg, showButto
                   <Tr key={index}>
                     
                       <Td>
+                      <Box w={"100%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                         {item.id}
+                      </Box>
                       </Td>
                       <Td>
                         {item.nombre}
                       </Td>
                        <Td>
+                      <Box w={"100%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                         {item.estado ? "Activo" : "Inactivo"}
+                      </Box>
                       </Td>
                        <Td>
                         {item.fecha_inicio.toString().replace("T00:00:00.000Z","")}
@@ -159,49 +166,15 @@ export default function TablaConvocatoria({ columns, items, path, msg, showButto
           </Box>
         </Flex>
       </Box>
-      <Flex
-        className="pagination"
-        justifyContent={"center"}
-        // gap={"5px"}
-        // style={{ display: "flex", justifyContent: "center" }}
-      >
-        <Boton
-          isDisabled={currentPage === 0}
-          funcion={atrasPage}
-          w={"30px"}
-          radius={"50%"}
-          msg={<Icon as={MdChevronLeft} boxSize={5} />}
-        />
-        {Array.from({ length: totalPages })
-          .slice(indexI, indexF)
-          .map((_, index) => {
-            index = index + indexI;
-            return (
-              <Button
-                key={index}
-                onClick={() => {
-                  handlePageChange(index);
-                }}
-                bgColor={currentPage === index ? "white" : "principal.100"}
-                textColor={currentPage === index ? "black" : "white"}
-                _hover={{
-                  bgColor: currentPage === index ? "#F0847D" : "gray.300",
-                }}
-                w="30px"
-                alignItems="center"
-              >
-                {index + 1}
-              </Button>
-            );
-          })}
-        <Boton
-          isDisabled={currentPage === totalPages - 1}
-          funcion={adelantePage}
-          w={"30px"}
-          radius={"50%"}
-          msg={<Icon as={MdChevronRight} boxSize={5} />}
-        />
-      </Flex>
-    </div>
+      <Paginacion
+        currentPage={currentPage}
+        totalPages={totalPages}
+        indexI={indexI}
+        indexF={indexF}
+        handlePageChange={handlePageChange}
+        atrasPage={atrasPage}
+        adelantePage={adelantePage}
+      />
+    </Box>
   );
 }

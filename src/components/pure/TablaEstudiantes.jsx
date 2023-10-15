@@ -17,10 +17,12 @@ import {
 import { Link } from "react-router-dom";
 import Boton from "../pure/Boton";
 import { MdAdd, MdChevronLeft, MdChevronRight } from "react-icons/md";
-import { RiEdit2Fill } from "react-icons/ri";
+import { AiOutlineEdit } from "react-icons/ai";
 import axiosApi from "../../utils/config/axios.config";
 import { AppContext } from "../context/AppProvider";
 import { toast } from 'react-hot-toast';
+import Paginacion from "./Paginacion";
+import { AiOutlineEye } from "react-icons/ai";
 export default function TablaEstudiantes({ columns, items, path, msg, showButton }) {
   const [currentPage, setCurrentPage] = useState(0);
   const [indexI, setIndexI] = useState(0);
@@ -83,7 +85,7 @@ export default function TablaEstudiantes({ columns, items, path, msg, showButton
  },[]) 
 
   return (
-    <div>
+    <Box>
        <Flex align={"center"} gap={"5px"}>
         <FormLabel id="switch" m={"0"}>Mostrar Inactivos</FormLabel> 
         <Switch id="switch" colorScheme="cyan"  onChange={(e)=>{
@@ -92,9 +94,10 @@ export default function TablaEstudiantes({ columns, items, path, msg, showButton
             showActive===true ? obtenerEstudiantes(1) : obtenerEstudiantes(0)
         }}/>
         </Flex>
-      <Box mb="15px" mt="20px" p="20px" borderRadius="8px" bgColor="white">
+      <Box mb="15px" mt="20px" p="20px" borderRadius="8px" bgColor="white"
+        boxShadow={"rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;"}
+      >
         <Flex
-          // w={["190px", "350px", "510px", "700px"]}
           w={{
             base: "240px",
             sm: "310px",
@@ -118,7 +121,7 @@ export default function TablaEstudiantes({ columns, items, path, msg, showButton
                       key={index}
                       style={{
                         borderBottom: "2px solid",
-                        borderBottomColor: "#E7ADA2",
+                        borderBottomColor: "primero.100",
                       }}
                     >
                       {column}
@@ -129,17 +132,36 @@ export default function TablaEstudiantes({ columns, items, path, msg, showButton
               <Tbody>
                 {estudiantes && estudiantes.map((item, index) => (
                   <Tr key={index}>
-                      <Td>{item.nombre}</Td>
-                      <Td>{item.apellido}</Td>
-                      <Td>{item.email}</Td>
-                      <Td>{item.estado ? "Activo" : "Inactivo"}</Td>
-                      <Td>{item.semestre}</Td>
-                      <Td>{item.codigo}</Td>
+                      <Td>
+                        <Box w={"100%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+                    {item.nombre}
+                        </Box>
+                        </Td>
+                      <Td>
+                        <Box w={"100%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+                    {item.apellido}
+                        </Box>
+                        </Td>
+                      <Td>
+                        <Box w={"100%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+                    {item.email}
+                          </Box>
+                        </Td>
+                      <Td>
+                        <Box w={"100%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+                    {item.estado ? "Activo" : "Inactivo"}
+                        </Box>
+                        </Td>
                     <Td>{
-                        <Button variant={"unstyled"} as={Link} to={`/editarEstudiante/${item.id}`}>
-                        <Icon w={"20px"} h={"20px"} as={RiEdit2Fill}/>
+                        <Button display={"flex"} justifyContent={"center"} alignItems={"center"} backgroundColor={"segundo.100"} h={"30px"} as={Link} to={`/editarEstudiante/${item.id}`}>
+                        <Icon color={"primero.100"} as={AiOutlineEdit}/>
                         </Button>
                         }</Td>
+                    <Td display={"flex"} alignItems={"center"} justifyContent={"center"}>{
+                        <Button display={"flex"} justifyContent={"center"} alignItems={"center"} backgroundColor={"segundo.100"} h={"30px"} w={"55px"}as={Link} to={`/estudiante/resultados`}>
+                        <Icon color={"primero.100"} as={AiOutlineEye}/>
+                        </Button>
+                    }</Td>
                   </Tr>
                 ))}
               </Tbody>
@@ -147,49 +169,15 @@ export default function TablaEstudiantes({ columns, items, path, msg, showButton
           </Box>
         </Flex>
       </Box>
-      <Flex
-        className="pagination"
-        justifyContent={"center"}
-        // gap={"5px"}
-        // style={{ display: "flex", justifyContent: "center" }}
-      >
-        <Boton
-          isDisabled={currentPage === 0}
-          funcion={atrasPage}
-          w={"30px"}
-          radius={"50%"}
-          msg={<Icon as={MdChevronLeft} boxSize={5} />}
-        />
-        {Array.from({ length: totalPages })
-          .slice(indexI, indexF)
-          .map((_, index) => {
-            index = index + indexI;
-            return (
-              <Button
-                key={index}
-                onClick={() => {
-                  handlePageChange(index);
-                }}
-                bgColor={currentPage === index ? "white" : "principal.100"}
-                textColor={currentPage === index ? "black" : "white"}
-                _hover={{
-                  bgColor: currentPage === index ? "#F0847D" : "gray.300",
-                }}
-                w="30px"
-                alignItems="center"
-              >
-                {index + 1}
-              </Button>
-            );
-          })}
-        <Boton
-          isDisabled={currentPage === totalPages - 1}
-          funcion={adelantePage}
-          w={"30px"}
-          radius={"50%"}
-          msg={<Icon as={MdChevronRight} boxSize={5} />}
-        />
-      </Flex>
-    </div>
+    <Paginacion
+        currentPage={currentPage}
+        totalPages={totalPages}
+        indexI={indexI}
+        indexF={indexF}
+        handlePageChange={handlePageChange}
+        atrasPage={atrasPage}
+        adelantePage={adelantePage}
+      />
+    </Box>
   );
 }

@@ -66,7 +66,7 @@ export default function Login() {
   });
 
   return (
-    <CardLogo wd={"380px"} hg={"500px"}>
+    <CardLogo wd={"380px"} p={"20px"}>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

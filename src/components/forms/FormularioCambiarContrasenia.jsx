@@ -12,7 +12,6 @@ import * as Yup from "yup";
 import { Formik, Field, Form } from "formik";
 import { Toaster, toast} from "react-hot-toast";
 import {React, useContext }from "react";
-import { Link } from "wouter";
 import { AppContext } from "../context/AppProvider";
 import Boton from "../pure/Boton";
 import Btn from "../pure/Btn";

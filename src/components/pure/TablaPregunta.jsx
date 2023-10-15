@@ -20,7 +20,7 @@ import { AppContext } from "../context/AppProvider";
 import axiosApi from "../../utils/config/axios.config";
 import Btn from "../pure/Btn"
 import { toast } from "react-hot-toast";
-import { RiEdit2Fill } from "react-icons/ri";
+import { AiOutlineEdit } from "react-icons/ai";
 import { MdAdd, MdChevronLeft, MdChevronRight } from "react-icons/md";
 import Paginacion from "./Paginacion";
 
@@ -56,7 +56,6 @@ export default function TablaPregunta({ columns, items, path, msg, showButton })
       toast.error("No se pueden obtener las preguntas!")
     })
     setPreguntas(response.data)
-    "" 
   }
 
 
@@ -96,7 +95,7 @@ export default function TablaPregunta({ columns, items, path, msg, showButton })
             path={path}
             w={["100%", "250px"]}
             radius={"8px"}
-          />*/}
+        />*/}
           <Btn
             leftIcon={<MdAdd/>}
             path={path}
@@ -115,7 +114,9 @@ export default function TablaPregunta({ columns, items, path, msg, showButton })
           </Flex>
         </Flex>
       )}
-      <Box mb="15px" mt="20px" p="20px" borderRadius="8px" bgColor="white">
+      <Box mb="15px" mt="20px" p="20px" borderRadius="8px" bgColor="white"
+        boxShadow={"rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;"}
+      >
         <Flex
           w={{
             base: "240px",
@@ -140,7 +141,7 @@ export default function TablaPregunta({ columns, items, path, msg, showButton })
                       key={index}
                       style={{
                         borderBottom: "2px solid",
-                        borderBottomColor: "#E7ADA2",
+                        borderBottomColor: "primero.100",
                       }}
                     >
                       {column}
@@ -152,20 +153,37 @@ export default function TablaPregunta({ columns, items, path, msg, showButton })
                 {preguntas && currentItems.map((item, index) => (
 
                   <Tr key={item.id}>
-                    <Td>{item.id}</Td>
+                    <Td>
+                        <Box display={"flex"} alignItems={"center"} justifyContent={"center"} w={"100%"}>
+                    {item.id}
+                        </Box>
+                        </Td>
                     <Td
                       maxW={"300px"}
                       textOverflow={"ellipsis"}
                       overflow={"hidden"}
                       whiteSpace={"nowrap"}
 
-                    >{item.texto_pregunta}</Td>
-                    <Td>{item.semestre}</Td>
-                    <Td>{item.estado ? "Activo" : "Inactivo"}</Td>
-                    <Td>{item.categoria.nombre}</Td>
+                    >
+                    {item.texto_pregunta}</Td>
+                    <Td>
+                      <Box w={"100%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                        {item.semestre}
+                        </Box>
+                    </Td>
+                    <Td>
+                      <Box w={"100%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                    {item.estado ? "Activo" : "Inactivo"}
+                      </Box>
+                      </Td>
+                    <Td>
+                      <Box w={"100%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                    {item.categoria.nombre}
+                      </Box>
+                      </Td>
                     <Td>{
-                      <Button variant={"unstyled"} as={Link} to={`/editarPregunta/${item.id}`}>
-                        <Icon w={"20px"} h={"20px"} as={RiEdit2Fill} />
+                      <Button display={"flex"} justifyContent={"center"} h={"30px"} alignItems={"center"} backgroundColor={"segundo.100"} variant={"unstyled"} as={Link} to={`/editarPregunta/${item.id}`}>
+                        <Icon color={"primero.100"} as={AiOutlineEdit} />
                       </Button>
                       }</Td>
                   </Tr>
@@ -176,48 +194,7 @@ export default function TablaPregunta({ columns, items, path, msg, showButton })
           </Box>
         </Flex>
       </Box>
-      <Flex
-        className="pagination"
-        justifyContent={"center"}
-      >
-        <Boton
-          isDisabled={currentPage === 0}
-          funcion={atrasPage}
-          w={"30px"}
-          radius={"50%"}
-          msg={<Icon as={MdChevronLeft} boxSize={5} />}
-        />
-        {Array.from({ length: totalPages })
-            .slice(indexI, indexF)
-            .map((_, index) => {
-              index = index + indexI;
-              return (
-                <Button
-                  key={index}
-                  onClick={() => {
-                    handlePageChange(index);
-                  }}
-                  bgColor={currentPage === index ? "white" : "principal.100"}
-                  textColor={currentPage === index ? "black" : "white"}
-                  _hover={{
-                    bgColor: currentPage === index ? "#F0847D" : "gray.300",
-                  }}
-                  w="30px"
-                  alignItems="center"
-                >
-                  {index + 1}
-                </Button>
-              );
-            })}
-        <Boton
-          isDisabled={currentPage === totalPages - 1}
-          funcion={adelantePage}
-          w={"30px"}
-          radius={"50%"}
-          msg={<Icon as={MdChevronRight} boxSize={5} />}
-        />
-      </Flex>
-      <Paginacion
+        <Paginacion
         currentPage={currentPage}
         totalPages={totalPages}
         indexI={indexI}

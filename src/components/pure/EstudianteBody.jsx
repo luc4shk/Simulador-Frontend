@@ -8,9 +8,8 @@ export default function EstudianteBody() {
     "Apellidos",
     "Correo",
     "Estado",
-    "Semestre",
-    "Código",
     "Editar",
+    "Resultado",
   ];
 
 

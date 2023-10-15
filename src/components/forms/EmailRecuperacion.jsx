@@ -11,6 +11,7 @@ import {
   import CardLogo from "../pure/CardLogo";
   import React from "react";
 import axiosApi from "../../utils/config/axios.config";
+import Btn from "../pure/Btn";
   
   export default function EmailRecuperación() {
     const initialValues = {
@@ -39,7 +40,8 @@ import axiosApi from "../../utils/config/axios.config";
     });
   
     return (
-      <CardLogo wd={"450px"} hg={"400px"}>
+      <CardLogo wd={"450px"} hg={"370px"}
+      >
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -68,15 +70,12 @@ import axiosApi from "../../utils/config/axios.config";
                   />
                   <FormErrorMessage>{errors.email}</FormErrorMessage>
                 </FormControl>
-                <Button
-                  color="white"
-                  background={"principal.100"}
+                <Btn
+                  isSubmit={true}
                   mt={8}
-                  width="full"
-                  type="submit"
-                >
-                  Buscar
-                </Button>
+                  w="full"
+                  msg={"Buscar"} 
+                />
               </Form>
             );
           }}

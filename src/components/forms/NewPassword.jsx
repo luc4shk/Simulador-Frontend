@@ -11,6 +11,7 @@ import {
   import CardLogo from "../pure/CardLogo";
   import React from "react";
   import { useParams, useNavigate } from "react-router-dom";
+  import Btn from "../pure/Btn"
 import axiosApi from "../../utils/config/axios.config";
   
   export default function NewPassword() {
@@ -54,7 +55,7 @@ import axiosApi from "../../utils/config/axios.config";
     });
   
     return (
-      <CardLogo wd={"380px"} hg={"500px"}>
+      <CardLogo wd={"350px"} p={"20px"}>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -69,7 +70,7 @@ import axiosApi from "../../utils/config/axios.config";
             return (
               <Form>
                 <FormControl isInvalid={errors.password && touched.password}>
-                  <FormLabel htmlFor="password" mt={4}>
+                  <FormLabel htmlFor="password" >
                     Contraseña Nueva
                   </FormLabel>
                   <Field
@@ -96,15 +97,12 @@ import axiosApi from "../../utils/config/axios.config";
                   />
                   <FormErrorMessage>{errors.passwordR}</FormErrorMessage>
                 </FormControl>
-                <Button
-                  color="white"
-                  background={"principal.100"}
-                  mt={4}
-                  width="full"
-                  type="submit"
-                >
-                  Aceptar
-                </Button>
+               <Btn
+                 isSubmit={true}
+                 msg={"Aceptar"}
+                 w={"full"}
+                 mt={4}
+                />
               </Form>
             );
           }}

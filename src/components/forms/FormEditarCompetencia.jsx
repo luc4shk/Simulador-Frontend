@@ -7,7 +7,8 @@ import {
   Input,
   Textarea,
   FormControl,
-  FormErrorMessage
+  FormErrorMessage,
+  FormLabel
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
 import { useParams } from "react-router-dom";
@@ -75,9 +76,9 @@ export default function FormularioEditarCompetencia() {
 
 
   const validationSchema = Yup.object().shape({
-    nombre: Yup.string().required("El nombre es requerido").max(25, "Máximo 25 caracteres").min(5, "Mínimo 5 caracteres"),
+    nombre: Yup.string().required("El nombre es requerido").max(25, "Máximo 25 caracteres").min(5, "Mínimo 5 caracteres").matches("^(?! )[a-zA-ZÀ-ÖØ-öø-ÿ]+( [a-zA-ZÀ-ÖØ-öø-ÿ]+)*(?<! )$", "El nombre solamente debe contener letras"),
     estado: Yup.string().required("El estado es requerido"),
-    descripcion: Yup.string().required("La descripción es requerida").max(200, "Máximo 200 caracteres").min(10, "Mínimo 10 caracteres")
+    descripcion: Yup.string().required("La descripción es requerida").max(200, "Máximo 200 caracteres").min(10, "Mínimo 10 caracteres").matches("^(?! )[a-zA-ZÀ-ÖØ-öø-ÿ.,\r\n0-9]+( [a-zA-ZÀ-ÖØ-öø-ÿ,.\r\n0-9]+)*(?<! )$","La descripcion solamente debe contener letras")
   });
 
 
@@ -102,7 +103,8 @@ export default function FormularioEditarCompetencia() {
             validationSchema={validationSchema}
             onSubmit={({ nombre, descripcion, estado }, { setFieldValue }) => {
               const estadoValue = estado === "true";
-              actualizarCompetencia(nombre, descripcion, estadoValue, id);
+              let desc = descripcion.replace(/\n+/g,"\n")
+              actualizarCompetencia(nombre, desc, estadoValue, id);
               setFieldValue("estado", estadoValue);
             }}
           >
@@ -118,7 +120,7 @@ export default function FormularioEditarCompetencia() {
                   >
                     <Box>
                       <FormControl display="flex" flexDirection="column" justifyContent="center" isInvalid={errors.nombre && touched.nombre}>
-                        <label htmlFor="nombre">Nombre</label>
+                        <FormLabel htmlFor="nombre">Nombre</FormLabel>
                         <Field
                           name="nombre"
                           as={Input}
@@ -136,6 +138,7 @@ export default function FormularioEditarCompetencia() {
                       w={["200px", "300px", "350px", "400px"]}
                     >
                       <FormControl display="flex" flexDirection="column" justifyContent="center" isInvalid={errors.estado && touched.estado}>
+               <FormLabel htmlFor="estado">Estado</FormLabel> 
                         <Field
                           name="estado"
                           as={Select}
@@ -158,7 +161,7 @@ export default function FormularioEditarCompetencia() {
                       justifyContent="center"
                     >
                       <FormControl display="flex" flexDirection="column" justifyContent="center" isInvalid={errors.descripcion && touched.descripcion}>
-                        <label htmlFor="descripcion">Descripción</label>
+                        <FormLabel htmlFor="descripcion">Descripción</FormLabel>
                         <Field
                           name="descripcion"
                           as={Textarea}

@@ -4,7 +4,7 @@ import { Center } from "@chakra-ui/react";
 import { RiEdit2Fill, RiDeleteBin2Fill } from "react-icons/ri";
 import TablaPrueba from "./TablaPrueba";
 export default function PruebaBody() {
-  const columns = ["Nombre", "Semestre", "Competencias"];
+  const columns = ["Id","Nombre", "Semestre", "Competencias","Editar"];
 
 
   return (

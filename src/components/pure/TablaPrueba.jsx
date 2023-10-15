@@ -11,14 +11,16 @@ import {
   Button,
   Icon,
   useEditable,
+  FormLabel,
+  Switch,
   Text
 } from "@chakra-ui/react";
-import { Link } from "wouter";
 import Boton from "../pure/Boton";
 import { MdAdd, MdChevronLeft, MdChevronRight } from "react-icons/md";
 import axiosApi from "../../utils/config/axios.config";
 import { AppContext } from "../context/AppProvider";
-import { RiEdit2Fill } from "react-icons/ri";
+import { AiOutlineEdit } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import Paginacion from "./Paginacion";
 import Btn from "./Btn";
 
@@ -26,6 +28,7 @@ export default function TablaPrueba({ columns, items, path, msg, showButton }) {
   const [currentPage, setCurrentPage] = useState(0);
   const [indexI, setIndexI] = useState(0);
   const [indexF, setIndexF] = useState(5);
+  const [showActive, setShowActive] = useState(false);
   const [pruebas,setPruebas] = useState();
   const {token} = useContext(AppContext)
   const itemsPerPage = 5;
@@ -65,33 +68,27 @@ export default function TablaPrueba({ columns, items, path, msg, showButton }) {
     setIndexF(indexF - 5);
   };
 
-  const obtenerPruebas = async () =>{
-    let response = await axiosApi.get(`/api/prueba`,{
-        headers:{
+  const obtenerActivos = async (estado) =>{
+    let response = await axiosApi.get(`/api/prueba/?estado=${estado}`,{
+      headers:{
         Authorization:"Bearer " + token,
       }
     }).catch((e)=>{
-        toast.error(e.response.data.error)
-     })
-     setPruebas(response.data)
-    
+      toast.error(e.response.data.error)
+    })
+    setPruebas(response.data)
+
   }
 
   useEffect(()=>{
-    obtenerPruebas()
+    obtenerActivos(1)
   },[])
 
   return (
     <div>
       {showButton && (
-        // <Boton
-        //   msg={msg}
-        //   leftIcon={<MdAdd />}
-        //   as={"link"}
-        //   path={path}
-        //   w={["100%", "250px"]}
-        //   radius={"8px"}
-        // />
+
+        <Flex align={"center"} flexDir={["column", "column", "row"]} gap={"15px"} justifyContent={"space-between"}>
         <Btn
           msg={msg}
           leftIcon={<MdAdd/>}
@@ -101,8 +98,23 @@ export default function TablaPrueba({ columns, items, path, msg, showButton }) {
         >
 
         </Btn>
+
+        <Flex align={"center"} gap={"5px"}>
+            <FormLabel id="switch" m={"0"}>Mostrar Inactivos</FormLabel>
+            <Switch id="switch" colorScheme="cyan" onChange={(e) => {
+              setCurrentPage(0)
+              setShowActive(!showActive)
+              showActive === true ? obtenerActivos(1) : obtenerActivos(0)
+            }} />
+          </Flex>
+
+
+        </Flex>
+        
       )}
-      <Box mb="15px" mt="20px" p="20px" borderRadius="8px" bgColor="white">
+      <Box mb="15px" mt="20px" p="20px" borderRadius="8px" bgColor="white" 
+        boxShadow={"rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;"}
+      >
         <Flex
           // w={["190px", "350px", "510px", "700px"]}
           w={{
@@ -128,7 +140,7 @@ export default function TablaPrueba({ columns, items, path, msg, showButton }) {
                       key={index}
                       style={{
                         borderBottom: "2px solid",
-                        borderBottomColor: "#E7ADA2",
+                        borderBottomColor: "principal.100",
                       }}
                     >
                       {column}
@@ -139,13 +151,30 @@ export default function TablaPrueba({ columns, items, path, msg, showButton }) {
               <Tbody>
                 {pruebas && currentItems.map((item, index) => (
                   <Tr key={index}>
+                    <Td>
+                      <Box w={"100%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                    {item.id}
+                      </Box>
+                      </Td>
                     <Td>{item.nombre}</Td>
-                    <Td>{item.semestre}</Td>
-                    <Td>{
-                        item.competencias.map((data,index)=>(
-                            <Text>{data.nombre}</Text>
-                        ))
-                    }
+                    <Td>
+                      <Box w={"100%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                        {item.semestre}
+                      </Box>
+                    </Td>
+                    <Td>
+                        <Box w={"100%"} display={"flex"} alignItems={"center"} justifyContent={"center"} flexDir={"column"}>
+                    {
+                      item.competencias.map((data,index)=>(
+                        <Text>{data.nombre}</Text>
+                      ))
+                      }
+                        </Box>
+                    </Td>
+                    <Td>
+                      <Button as={Link} display={"flex"} h={"30px"} justifyItems={"center"} justifyContent={"cneter"} backgroundColor={"segundo.100"} to={`/editarPrueba/${item.id}`}>
+                        <Icon color={"primero.100"} as={AiOutlineEdit}></Icon>
+                      </Button>
                     </Td>
                   </Tr>
                 ))}
@@ -154,50 +183,7 @@ export default function TablaPrueba({ columns, items, path, msg, showButton }) {
           </Box>
         </Flex>
       </Box>
-      <Flex
-        className="pagination"
-        justifyContent={"center"}
-        // gap={"5px"}
-        // style={{ display: "flex", justifyContent: "center" }}
-      >
-        <Boton
-          isDisabled={currentPage === 0}
-          funcion={atrasPage}
-          w={"30px"}
-          radius={"50%"}
-          msg={<Icon as={MdChevronLeft} boxSize={5} />}
-        />
-        {Array.from({ length: totalPages })
-          .slice(indexI, indexF)
-          .map((_, index) => {
-            index = index + indexI;
-            return (
-              <Button
-                key={index}
-                onClick={() => {
-                  handlePageChange(index);
-                }}
-                bgColor={currentPage === index ? "white" : "principal.100"}
-                textColor={currentPage === index ? "black" : "white"}
-                _hover={{
-                  bgColor: currentPage === index ? "#F0847D" : "gray.300",
-                }}
-                w="30px"
-                alignItems="center"
-              >
-                {index + 1}
-              </Button>
-            );
-          })}
-        <Boton
-          isDisabled={currentPage === totalPages - 1}
-          funcion={adelantePage}
-          w={"30px"}
-          radius={"50%"}
-          msg={<Icon as={MdChevronRight} boxSize={5} />}
-        />
-      </Flex>
-       <Paginacion
+      <Paginacion
         currentPage={currentPage}
         totalPages={totalPages}
         indexI={indexI}

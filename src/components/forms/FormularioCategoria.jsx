@@ -70,8 +70,8 @@ export default function FormularioCategoria() {
   };
 
   const validationSchema = Yup.object().shape({
-    nombre: Yup.string().required("El nombre es requerido").min(5,"Minimo 5 caracteres").max(25,"Maximo 25 caracteres"),
-    descripcion: Yup.string().required("La descripción es requerida").min(10,"Minimo 10 caracteres").max(200,"Maximo 200 caracteres"),
+    nombre: Yup.string().required("El nombre es requerido").min(5,"Minimo 5 caracteres").max(25,"Maximo 25 caracteres").matches("^(?! )[a-zA-ZÀ-ÖØ-öø-ÿ]+( [a-zA-ZÀ-ÖØ-öø-ÿ]+)*(?<! )$","El nombre solamente debe contener letras"),
+    descripcion: Yup.string().required("La descripción es requerida").min(10,"Minimo 10 caracteres").max(200,"Maximo 200 caracteres").matches("^(?! )[a-zA-ZÀ-ÖØ-öø-ÿ.,\r\n0-9]+( [a-zA-ZÀ-ÖØ-öø-ÿ,.\r\n0-9]+)*(?<! )$","La descripción solamente debe contener letras"),
     competencia: Yup.string().required("La competencia es requerida"),
   });
 
@@ -93,7 +93,8 @@ export default function FormularioCategoria() {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={({nombre, descripcion,competencia})=>{
-              agregarCategoria(nombre,descripcion,parseInt(competencia))
+              let desc = descripcion.replace(/\n+/g,"\n")
+              agregarCategoria(nombre,desc,parseInt(competencia))
             }}
           >
             {(formik) => (
@@ -137,7 +138,7 @@ export default function FormularioCategoria() {
                     as={Textarea}
                     mt="10px"
                     id="descripcion"
-                    name="descripcion"
+              name="descripcion"
                     resize="vertical"
                     h="100px"
                     maxW={["200px", "300px", "350px", "400px"]}

@@ -5,12 +5,12 @@ export default function TipoPregunta() {
   return (
     <Card align="center">
       <CardHeader>
-        <Heading size="md"> Customer dashboard</Heading>
+        <Heading size="md">Preguntas Disponibles</Heading>
       </CardHeader>
       <CardBody>
-        <Text>View a summary of all your customers over the last month.</Text>
+        <Text>Seleccione el tipo de pregunta que desea agregar</Text>
       </CardBody>
-      <CardFooter w={"100%"} display={"flex"} flexDir={["column","column","row"]} gap={["20px","20px","0px"]} alignItems={"center"} justifyContent={"space-between"} >
+      <CardFooter w={"100%"} display={"flex"} flexDir={["column","column","row"]} gap={["20px","20px","20px"]} alignItems={"center"} justifyContent={"space-between"} >
         <Btn
           colorScheme={"blue"}
           msg={"Preguntas Simples"}

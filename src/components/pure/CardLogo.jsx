@@ -1,7 +1,7 @@
 import { Box, Button, Center, Image } from "@chakra-ui/react";
 import React from "react";
 
-export default function CardLogo({ children, wd, hg }) {
+export default function CardLogo({ children, wd, hg, p }) {
   return (
     <Center h="100vh" bgImage={"../../../public/bg.svg"}>
       <Box
@@ -13,8 +13,8 @@ export default function CardLogo({ children, wd, hg }) {
         overflow="hidden"
         pt="10px"
         px={8}
-        boxShadow="lg"
-        borderColor={"gray.100"}
+        p={p}
+        borderColor={"gray.300"}
       >
         <Image
           src="../../../public/Logo1.jpg"

@@ -22,19 +22,19 @@ import axiosApi from "../../utils/config/axios.config";
 import { AppContext } from "../context/AppProvider";
 import { toast } from "react-hot-toast";
 import * as Yup from "yup";
-import useLocation from "wouter/use-location";
+import { useNavigate } from "react-router-dom";
 const categorias = ["Inglés", "Español", "Análisis", "Matemáticas"];
 import Btn from "../pure/Btn";
 
 export default function FormularioSimple() {
   const [archivo, setArchivo] = useState(null);
+  const navigate = useNavigate()
   const archivoInputRef = useRef(null);
   const inputRef = useRef();
   const ARef = useRef();
   const BRef = useRef();
   const CRef = useRef();
   const DRef = useRef();
-  const [loc, setLoc] = useLocation();
   const [categorias, setCategorias] = useState();
 
   const { token } = useContext(AppContext);
@@ -56,7 +56,7 @@ export default function FormularioSimple() {
     const formData = new FormData();
     formData.append("archivo", file);
     let response = await axiosApi
-      .post("/api/question/createQuestionFile", formData, {
+      .post("/api/question/createFile", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: "Bearer " + token,
@@ -67,8 +67,10 @@ export default function FormularioSimple() {
       });
 
     if (response.status === 200) {
-      toast.success("¡Archivo cargado correctamente!");
+      toast.success(`¡Archivo cargado correctamente!\n${response.data.message}`);
+      navigate("/preguntas")
     }
+    console.log(response.data)
   };
 
   const handleArchivoSeleccionado = (e, setFieldValue) => {
@@ -96,7 +98,7 @@ export default function FormularioSimple() {
       categoria_id: categoria_id,
     };
     let response = await axiosApi
-      .post("/api/question/createQuestion", body, {
+      .post("/api/question/create", body, {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -104,12 +106,10 @@ export default function FormularioSimple() {
       .catch((e) => {
         toast.error(e.response.data.error);
       })
-      .finally(() => {
-        setLoc("/preguntas");
-      });
 
     if (response.status === 200) {
       toast.success("¡Pregunta agregada correctamente!");
+      navigate("/preguntas")
     }
   };
 
@@ -120,20 +120,9 @@ export default function FormularioSimple() {
     opcionC: Yup.string().required("La opción C es requerida"),
     opcionD: Yup.string().required("La opción D es requerida"),
     respuesta: Yup.string()
-      .required("La respuesta es requerida")
-      .test(
-        "opcion-valid",
-        "La respuesta debe estar dentro de las opciones escogidas",
-        function (value) {
-          return (
-            value.toString() === this.resolve(Yup.ref("opcionA")) ||
-            value.toString() === this.resolve(Yup.ref("opcionB")) ||
-            value.toString() === this.resolve(Yup.ref("opcionC")) ||
-            value.toString() === this.resolve(Yup.ref("opcionD"))
-          );
-        }
-      ),
-    semestre: Yup.string().required("El semestre es requerido"),
+    .required("La respuesta es requerida").max(1,"Máximo un caracter ")
+    .matches(/^[A-Z]$/, "La respuesta debe ser una letra entre A-Z, debe ser mayúscula"),
+    semestre: Yup.string().required("El semestre es requerido").max(2,"Máximo dos caracteres").matches("[0-9]","El semestre solo puede contener números"),
     categoria: Yup.string().required("La categoría es requerida"),
   });
 
@@ -159,6 +148,7 @@ export default function FormularioSimple() {
   return (
     <Box>
       <Box
+        boxShadow={"rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;"}
         bg="white"
         p="40px"
         borderRadius="8px"
@@ -231,7 +221,7 @@ export default function FormularioSimple() {
                 <Box
                   display="flex"
                   flexDirection={["column", "column", "row"]}
-                  mt={"30px"}
+                  mt={"15px"}
                   width={"100%"}
                   alignItems={"center"}
                   gap={"20px"}
@@ -273,6 +263,7 @@ export default function FormularioSimple() {
                   display="flex"
                   flexDirection="column"
                   justifyContent="center"
+                  gap={"10px"}
                 >
                   <Flex flexDir={["column", "column", "row"]} gap={"20px"}>
                     <FormControl isInvalid={errors.opcionA && touched.opcionA}>

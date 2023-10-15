@@ -41,6 +41,7 @@ import PrincipalPageUser from "../pages/User/principal/PrincipalPageUser";
 import EditarInfoUser from "../pages/User/principal/EditarInfoUser";
 import ConvocatoriaUser from "../pages/User/convocatorias/ConvocatoriaUser";
 import PruebasUser from "../pages/User/pruebas/PruebasUser";
+import EditarPrueba from "../pages/Admin/pruebas/EditarPrueba";
 export default function AppRouter() {
   const { token, user, role } = useContext(AppContext);
 
@@ -97,7 +98,7 @@ export default function AppRouter() {
               path="/editarEstudiante/:id"
               element={<EditarEstudiante />}
             />
-            <Route path="/editarPrueba/:id" element={<EditarEstudiante />} />
+            <Route path="/editarPrueba/:id" element={<EditarPrueba/>} />
             <Route
               path="/editarConvocatoria/:id"
               element={<EditarConvocatoria />}

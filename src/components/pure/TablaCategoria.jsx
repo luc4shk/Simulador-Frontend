@@ -16,10 +16,11 @@ import {
 import { Link } from "react-router-dom";
 import Boton from "../pure/Boton";
 import { MdAdd, MdChevronLeft, MdChevronRight } from "react-icons/md";
-import { RiEdit2Fill } from "react-icons/ri";
+import {AiOutlineEdit} from "react-icons/ai"
 import { AppContext } from "../context/AppProvider";
 import axiosApi from "../../utils/config/axios.config";
 import { toast } from "react-hot-toast";
+import Paginacion from "./Paginacion";
 import Btn from "./Btn";
 export default function TablaCategoria({ columns, items, path, msg, showButton }) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -97,7 +98,9 @@ export default function TablaCategoria({ columns, items, path, msg, showButton }
           </Flex>
         </Flex>
       )}
-      <Box mb="15px" mt="20px" p="20px" borderRadius="8px" bgColor="white">
+      <Box mb="15px" mt="20px" p="20px" borderRadius="8px" bgColor="white"
+        boxShadow={"rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;"}
+      >
         <Flex
           w={{
             base: "240px",
@@ -122,7 +125,7 @@ export default function TablaCategoria({ columns, items, path, msg, showButton }
                       key={index}
                       style={{
                         borderBottom: "2px solid",
-                        borderBottomColor: "#E7ADA2",
+                        borderBottomColor: "primero.100",
                       }}
                     >
                       {column}
@@ -134,13 +137,29 @@ export default function TablaCategoria({ columns, items, path, msg, showButton }
                 {categorias && currentItems.map((item, index) => (
 
                   <Tr key={item.id}>
-                    <Td>{item.id}</Td>
-                    <Td>{item.nombre}</Td>
-                    <Td>{item.estado ? "Activo" : "Inactivo"}</Td>
-                    <Td>{item.competencia.nombre}</Td>
+                    <Td>
+                      <Box display={"flex"} alignItems={"center"} justifyContent={"center"} w={"100%"}>
+                    {item.id}
+                      </Box>
+                      </Td>
+                    <Td>
+                        <Box display={"flex"} alignItems={"center"} justifyContent={"center"} w={"100%"}>
+                    {item.nombre}
+                        </Box>
+                        </Td>
+                    <Td>
+                        <Box display={"flex"} alignItems={"center"} justifyContent={"center"} w={"100%"}>
+                    {item.estado ? "Activo" : "Inactivo"}
+                        </Box>
+                        </Td>
+                    <Td>
+                        <Box display={"flex"} alignItems={"center"} justifyContent={"center"} w={"100%"}>
+                    {item.competencia.nombre}
+                        </Box>
+                        </Td>
                     <Td>{
-                      <Button variant={"unstyled"} as={Link} to={`/editarCategoria/${item.id}`}>
-                       <Icon w={"20px"} h={"20px"} as={RiEdit2Fill} />
+                      <Button display={"flex"} alignItems={"center"} h={"30px"} justifyContent={"center"} backgroundColor={"segundo.100"} as={Link} to={`/editarCategoria/${item.id}`}>
+                       <Icon color={"principal.100"} as={AiOutlineEdit} />
                       </Button>
                     }</Td>
                   </Tr>
@@ -151,47 +170,15 @@ export default function TablaCategoria({ columns, items, path, msg, showButton }
           </Box>
         </Flex>
       </Box>
-      <Flex
-        className="pagination"
-        justifyContent={"center"}
-      >
-        <Boton
-          isDisabled={currentPage === 0}
-          funcion={atrasPage}
-          w={"30px"}
-          radius={"50%"}
-          msg={<Icon as={MdChevronLeft} boxSize={5} />}
-        />
-        {Array.from({ length: totalPages })
-          .slice(indexI, indexF)
-          .map((_, index) => {
-            index = index + indexI;
-            return (
-              <Button
-                key={index}
-                onClick={() => {
-                  handlePageChange(index);
-                }}
-                bgColor={currentPage === index ? "white" : "principal.100"}
-                textColor={currentPage === index ? "black" : "white"}
-                _hover={{
-                  bgColor: currentPage === index ? "#F0847D" : "gray.300",
-                }}
-                w="30px"
-                alignItems="center"
-              >
-                {index + 1}
-              </Button>
-            );
-          })}
-        <Boton
-          isDisabled={currentPage === totalPages - 1}
-          funcion={adelantePage}
-          w={"30px"}
-          radius={"50%"}
-          msg={<Icon as={MdChevronRight} boxSize={5} />}
-        />
-      </Flex>
+         <Paginacion
+        currentPage={currentPage}
+        totalPages={totalPages}
+        indexI={indexI}
+        indexF={indexF}
+        handlePageChange={handlePageChange}
+        atrasPage={atrasPage}
+        adelantePage={adelantePage}
+      />
     </Box>
   );
 }

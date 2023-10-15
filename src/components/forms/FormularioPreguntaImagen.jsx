@@ -11,16 +11,17 @@ import {
   Stack,
   FormControl,
   FormErrorMessage,
-  FormLabel
+  FormLabel,
+  Image
 } from "@chakra-ui/react";
 import { Formik, Form, Field} from "formik";
 import { useRef, useState, useEffect, useContext } from "react";
 import axiosApi from "../../utils/config/axios.config";
 import { AppContext } from "../context/AppProvider";
 import { toast } from "react-hot-toast";
-import useLocation from "wouter/use-location";
 import Btn from "../pure/Btn"
 import * as Yup from "yup";
+import {useNavigate} from "react-router-dom";
 
 
 export default function FormularioPreguntaImagen() {
@@ -29,7 +30,7 @@ export default function FormularioPreguntaImagen() {
   const {token} = useContext(AppContext)
   const [categorias, setCategorias] = useState(null);
   const inputRef = useRef();
-  const [loc, setLoc] = useLocation()
+  const navigate = useNavigate()
 
   const initialValues = {
     enunciado: "",
@@ -76,7 +77,7 @@ export default function FormularioPreguntaImagen() {
     }).catch((e) => {
       toast.error(e.response.data.error);
     }).finally(()=>{
-      setLoc("/preguntas");
+      navigate("/preguntas");
     });
 
     if (response.status === 200) {
@@ -91,11 +92,9 @@ export default function FormularioPreguntaImagen() {
     opcionC:  Yup.string().required("La opción C es requerida"),
     opcionD:  Yup.string().required("La opción D es requerida"),
     respuesta: Yup.string()
-    .required("La respuesta es requerida")
-    .test("opcion-valid", "La respuesta debe estar dentro de las opciones escogidas", function (value) {
-      return value.toString() === this.resolve(Yup.ref("opcionA")) || value.toString() === this.resolve(Yup.ref("opcionB")) || value.toString() === this.resolve(Yup.ref("opcionC")) || value.toString() === this.resolve(Yup.ref("opcionD"));
-    }),
-    semestre: Yup.string().required("El semestre es requerido"),
+    .required("La respuesta es requerida").max(1,"Máximo un caracter ")
+    .matches(/^[A-Z]$/, "La respuesta debe ser una letra entre A-Z, debe ser mayúscula"),
+    semestre: Yup.string().required("El semestre es requerido").max(2,"Máximo dos caracteres").matches("[0-9]","El semestre solo puede contener números"),
     categoria: Yup.string().required("La categoría es requerida"),
     imagen: Yup.mixed()
       .test("file-type", "El tipo de archivo es PNG/JPEG", (value) => {
@@ -118,6 +117,7 @@ export default function FormularioPreguntaImagen() {
   return (
     <Box>
       <Box
+        boxShadow={"rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;"}
         bg="white"
         p="40px"
         borderRadius="8px"
@@ -213,6 +213,7 @@ export default function FormularioPreguntaImagen() {
                       </FormControl>
                       </Box>
                     </Box>
+            
                     <Box
                       mt="10px"
                       display="flex"
