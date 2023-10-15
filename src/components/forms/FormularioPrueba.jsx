@@ -67,10 +67,8 @@ const FormularioPrueba = () => {
     })
       .then((response) => {
         setCompetencias(response.data);
-        console.log("compe",competencias)
       })
       .catch((error) => {
-        console.error('Error al obtener competencias:', error);
       });
   }, []);
 
@@ -82,10 +80,8 @@ const FormularioPrueba = () => {
       },
     }).then((response) => {
       setCategoriasObtenidas(response.data);
-      console.log(response.data)
     })
       .catch((error) => {
-        console.error('Error al obtener competencias:', error);
       });
   },[])
 
@@ -94,7 +90,6 @@ const FormularioPrueba = () => {
     const arregloCategorias = []
     const arregloCategoriasID = []
     const arregloPreguntasPorCategorias = []
-    //console.log("Values",values)
 
     const {categorias,descripcion,duracion,nombre, semestre,totalPreguntas} = values
 
@@ -147,7 +142,6 @@ const FormularioPrueba = () => {
       categorias: arregloCategoriasID,
       preguntas: arregloPreguntasPorCategorias,
     }
-    console.log(body)
     const response = await axiosApi.post("/api/prueba/create",body,{
       headers: {
         Authorization: "Bearer " + token,

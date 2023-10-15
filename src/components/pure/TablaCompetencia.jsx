@@ -128,7 +128,7 @@ export default function TablaCompetencia({ columns, items, path, msg, showButton
               <Thead>
                 <Tr>
                   {columns.map((column, index) => (
-                    <Th
+                    <Th 
                       textAlign="center"
                       key={index}
                       style={{
@@ -166,7 +166,7 @@ export default function TablaCompetencia({ columns, items, path, msg, showButton
                        
                       item.categorias && item.categorias.map((item,index)=>{
                         return(
-                          <p>{item.nombre}</p>
+                          <Box key={index}>{item.nombre}</Box>
                         )
                       })
                       }

@@ -30,7 +30,6 @@ export default function AdminProfileForm() {
 
   const getAdmin = async () =>{
     const data = await getAdministrator()
-    console.log(data)
     setData({
       nombre:data.nombre,
       apellido:data.apellido,
@@ -43,7 +42,6 @@ export default function AdminProfileForm() {
       imagen:data.foto_perfil && data.foto_perfil.url
     })
 
-    console.log(data.foto_perfil.url)
 
   }
 
@@ -53,7 +51,6 @@ export default function AdminProfileForm() {
     let response = await axiosApi.get("/api/user/profile",{
       headers:{ Authorization:"Bearer " + token }
     })
-    console.log(response.data)
 
     return response.data
   }
@@ -87,7 +84,6 @@ export default function AdminProfileForm() {
             <Image
               src={data && data.imagen}
               key={data && data.imagen}
-              onClick={()=>console.log(data.imagen)}
               width={["70px", "100px", "130px"]}
               height={["70px", "100px", "130px"]}
               borderRadius={"50%"}

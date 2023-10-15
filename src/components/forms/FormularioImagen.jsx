@@ -59,8 +59,6 @@ const actualizaravatar = async (file) =>{
   if(response.status === 200){
     toast.success("Imagen actualizada correctamente")
     getAdmin()
-    //localStorage.setItem("imagen",`${response.data.imageFile}?${Date.now()}`)
-    //  setImagen(`${response.data.imageFile}?${Date.now()}`)
   }
 }
 

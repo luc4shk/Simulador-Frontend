@@ -72,10 +72,6 @@ export default function FormEditarPregunta() {
     formData.append("respuesta", respuesta);
     formData.append("estado", estado)
     formData.append("categoria_id", categoria_id);
-    for (const entry of formData.entries()) {
-      const [key, value] = entry;
-      console.log(`${key}:${value}`);
-    }
 
 
     let response = await axiosApi.put(`/api/question/update/${id}`,formData,{
@@ -104,7 +100,6 @@ export default function FormEditarPregunta() {
         toast.error(e.response.data.error);
       });
 
-    console.log(response.data)
 
     const categoriaEncontrada = categorias && categorias.find(
       (categoria) => categoria.nombre === response.data.categoria
@@ -164,7 +159,6 @@ export default function FormEditarPregunta() {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={({enunciado, semestre,respuesta,estado,categoria, opciones})=>{
-              console.log(opciones)
               actualizarPregunta(id,inputRef.current.files[0],enunciado,opciones,semestre,respuesta,categoria,estado)
             }}
           >

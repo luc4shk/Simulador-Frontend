@@ -5,14 +5,23 @@ import {
   FormLabel,
   Input,
   FormErrorMessage,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogCloseButton,
+  useInterval,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
-import { Formik, Field, Form } from "formik";
+import { Formik, Field, Form, setIn } from "formik";
 import CardLogo from "../../components/pure/CardLogo";
-import {React, useContext, useEffect} from "react";
+import {React, useContext, useEffect, useState} from "react";
 import { AppContext } from "../../components/context/AppProvider";
 import { login } from "../../services/user/axios.service";
 import { Link, useNavigate} from "react-router-dom"
+import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode"
 
 export default function Login() {
@@ -22,16 +31,15 @@ export default function Login() {
   };
 
 
-  const { setToken, setRole,role} = useContext(AppContext)
+
+  const { setToken, setRole,role,token,user, setUser} = useContext(AppContext)
 
   const navigate = useNavigate()
 
   const redireccion = (rol) =>{
     if(rol==="Director"){
-      console.log("Rol desde función",rol)
       navigate("/home")
     }else if(rol==="Estudiante"){
-      console.log("Rol desde función",rol)
       navigate("/user")
     }else{
       navigate("/")
@@ -39,21 +47,24 @@ export default function Login() {
 
   } 
 
-
   useEffect(()=>{
     redireccion(role)
-  },[])
+  },[user])
+
 
 
   const ingresar = async (email, password) =>{
     const data = await login(email,password)
-    console.log(data)
     localStorage.setItem("token",data.accessToken)
+    //Cookies.set('token', data.accessToken, { expires: new Date().getTime() + 15000 })
     setToken(localStorage.getItem("token"))
-    console.log("Token", localStorage.getItem("token"))
+    //setToken(Cookies.get("token"))
+    //console.log("Token", localStorage.getItem("token"))
     const decoded = jwt_decode(localStorage.getItem("token"))
+    //const decoded = jwt_decode(Cookies.get("token"))
+    setUser(data)
     setRole(decoded.tipo)
-    console.log(decoded)
+    //console.log(decoded)
     redireccion(decoded.tipo)
   } 
 
@@ -64,6 +75,7 @@ export default function Login() {
     .min(5, "La contraseña es muy corta")
     .max(20, "La contraseña es muy larga"),
   });
+
 
   return (
     <CardLogo wd={"380px"} p={"20px"}>
@@ -100,6 +112,7 @@ export default function Login() {
                   as={Input}
                   id="password"
                   name="password"
+                  autocomplete={"on"}
                   borderColor="gray.300"
                   variant="filled"
                   type="password"

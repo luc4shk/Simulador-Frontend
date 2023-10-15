@@ -24,10 +24,8 @@ export default function FormEditarPrueba(){
     }).catch((e) => {
       toast.error("Error al traer los datos de la Prueba");
     });
-    console.log(response.data)
    
     const nuevoArreglo = response.data.configuracion_categoria.map(item => [item.categoria_id,item.valor_categoria]);
-    console.log(nuevoArreglo)
     setDatos({
       nombre: response.data.nombre,
       descripcion: response.data.descripcion,
@@ -72,7 +70,6 @@ export default function FormEditarPrueba(){
       puntaje_total:puntajeTotal,
       valoresCategorias:nuevo
     }
-    console.log("body",body)
     const response = await axiosApi.put(`/api/prueba/update/${id}`,body,{
       headers: {
         Authorization: "Bearer " + token
@@ -86,7 +83,6 @@ export default function FormEditarPrueba(){
       toast.success("¡Prueba editada con exito!")
       navigate("/pruebas")
     }
-    console.log(body)
     
   }
 
@@ -114,7 +110,6 @@ export default function FormEditarPrueba(){
         initialValues={datos}
         validationSchema={validationSchema}
         onSubmit={(values) => {
-          console.log("Values",values)
           actualizarPrueba(values)
         }}
       >

@@ -1,6 +1,6 @@
 import React from "react";
 import { SimpleGrid,Text,  CardHeader, CardBody, Button, Card , Heading, CardFooter} from "@chakra-ui/react";
-
+import { Link } from "react-router-dom";
 export default function ConvocatoriaBodyUser(){
   return(
   <SimpleGrid spacing={4} 
@@ -8,38 +8,39 @@ export default function ConvocatoriaBodyUser(){
 
   >
   <Card>
-    <CardHeader>
-      <Heading size='md'> Customer dashboard</Heading>
-    </CardHeader>
-    <CardBody>
-      <Text>View a summary of all your customers over the last month.</Text>
-    </CardBody>
-    <CardFooter>
-      <Button>View here</Button>
-    </CardFooter>
-  </Card>
-  <Card>
-    <CardHeader>
-      <Heading size='md'> Customer dashboard</Heading>
-    </CardHeader>
-    <CardBody>
-      <Text>View a summary of all your customers over the last month.</Text>
-    </CardBody>
-    <CardFooter>
-      <Button>View here</Button>
-    </CardFooter>
-  </Card>
-  <Card>
-    <CardHeader>
-      <Heading size='md'> Customer dashboard</Heading>
-    </CardHeader>
-    <CardBody>
-      <Text>View a summary of all your customers over the last month.</Text>
-    </CardBody>
-    <CardFooter>
-      <Button>View here</Button>
-    </CardFooter>
-  </Card>
+  <CardHeader>
+    <Heading size='md'>Evaluación 1</Heading>
+  </CardHeader>
+  <CardBody>
+    <Text>Esta evaluación evalúa tus habilidades en matemáticas.</Text>
+  </CardBody>
+  <CardFooter>
+    <Button as={Link}>Iniciar Prueba</Button>
+  </CardFooter>
+</Card>
+<Card>
+  <CardHeader>
+    <Heading size='md'>Evaluación 2</Heading>
+  </CardHeader>
+  <CardBody>
+    <Text>Esta evaluación se enfoca en tus conocimientos en ciencias sociales.</Text>
+  </CardBody>
+  <CardFooter>
+    <Button as={Link}>Iniciar Prueba</Button>
+  </CardFooter>
+</Card>
+<Card>
+  <CardHeader>
+    <Heading size='md'>Evaluación 3</Heading>
+  </CardHeader>
+  <CardBody>
+    <Text>Esta evaluación pondrá a prueba tus habilidades de administración.</Text>
+  </CardBody>
+  <CardFooter>
+    <Button as={Link}>Iniciar Prueba</Button>
+  </CardFooter>
+</Card>
+
 </SimpleGrid>
   )
 }

@@ -12,18 +12,19 @@ import {
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { useLocation, useRoute } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { AppContext } from "../context/AppProvider";
 import axiosApi from "../../utils/config/axios.config";
 import { toast, Toaster } from "react-hot-toast";
+import Btn from "../pure/Btn";
 
 export default function FormEditarEstudiante() {
   const {id} = useParams()
   const { token } = useContext(AppContext);
   const [datos, setDatos] = useState();
   const [loading, setLoading] = useState(true);
-  const [loc, setLoc] = useLocation();
+  const navigate = useNavigate()
 
   const actualizarEstudiante = async (nombre, apellido,codigo,email,semestre, estado, id) => {
     let body = {
@@ -35,24 +36,19 @@ export default function FormEditarEstudiante() {
       estado:estado
     };
 
-    let response = await axiosApi.put(`api/user/student/updateDir/${id}`, body, {
+    let response = await axiosApi.put(`api/user/student/update/${id}`, body, {
       headers: {
         Authorization: "Bearer " + token
       }
     }).catch((e) => {
       toast.error(e.response.data.error);
     }).finally(()=>{
-    setLoc("/estudiantes");
+      navigate("/estudiantes")
     });
 
     if (response.status === 200) {
       toast.success("¡Estudiante actualizado!");
     }
-    // if(body.estado===false){
-    //   toast("¡Todas las categorías asociadas a esta competencia se desactivaran!", {
-    //   icon: '⚠️',
-    //   });
-    // }
   };
 
   const getEstudianteById = async (id) =>{
@@ -73,8 +69,6 @@ export default function FormEditarEstudiante() {
         estado:response.data.estado.toString()
     })
     setLoading(false)
-
-
   }
 
 
@@ -112,8 +106,6 @@ export default function FormEditarEstudiante() {
             validationSchema={validationSchema}
             onSubmit={({ nombre, apellido, codigo, email, semestre, estado }, { setFieldValue }) => {
               const estadoValue = estado === "true";
-            //   actualizarCompetencia(nombre,c);
-            //   setFieldValue("estado", estadoValue);
               actualizarEstudiante(nombre,apellido,codigo,email,semestre,estadoValue,id)
             }}
           >
@@ -194,12 +186,6 @@ export default function FormEditarEstudiante() {
                         <FormErrorMessage>{errors.codigo}</FormErrorMessage>
                       </FormControl>
                     </Box>
-                    <Box
-                      mt="10px"
-                      display="flex"
-                      flexDirection="column"
-                      justifyContent="center"
-                    >
                       <FormControl display="flex" flexDirection="column" justifyContent="center" isInvalid={errors.email && touched.email}>
                         <FormLabel htmlFor="email">Correo</FormLabel>
                         <Field
@@ -212,16 +198,11 @@ export default function FormEditarEstudiante() {
                         />
                         <FormErrorMessage>{errors.email}</FormErrorMessage>
                       </FormControl>
-                    </Box>
-
-                    <Button
-                      w={["200px", "250px", "415px", "415px"]}
-                      mt={"30px"}
-                      type="submit"
-                      bgColor={"principal.100"}
-                      _hover={{ backgroundColor: "fondo.100" }}
-                      color={"white"}
-                    >Guardar</Button>
+                    <Btn
+                      isSubmit={true}
+                      msg={"Guardar"}
+                      w={"full"}
+                    />
                   </Box>
                 </Form>
               );

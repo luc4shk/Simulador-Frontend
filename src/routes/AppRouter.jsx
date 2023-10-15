@@ -66,7 +66,10 @@ export default function AppRouter() {
             <Route path="/preguntas" element={<Preguntas />}></Route>
             <Route path="/estudiantes" element={<Estudiantes />}></Route>
             <Route path="/convocatorias" element={<Convocatorias />}></Route>
-            <Route path="/formularioCompetencia" element={<AgregarCompetencia />}/>
+            <Route
+              path="/formularioCompetencia"
+              element={<AgregarCompetencia />}
+            />
             <Route path="/formularioCategoria" element={<AgregarCategoria />} />
             <Route path="/tipoPregunta" element={<SeleccionarTipoPregunta />} />
             <Route
@@ -98,7 +101,7 @@ export default function AppRouter() {
               path="/editarEstudiante/:id"
               element={<EditarEstudiante />}
             />
-            <Route path="/editarPrueba/:id" element={<EditarPrueba/>} />
+            <Route path="/editarPrueba/:id" element={<EditarPrueba />} />
             <Route
               path="/editarConvocatoria/:id"
               element={<EditarConvocatoria />}
