@@ -98,6 +98,7 @@ const FormularioPrueba = () => {
 
     const {categorias,descripcion,duracion,nombre, semestre,totalPreguntas} = values
 
+    try{
     values && values.competencias.forEach((competenciaId) => {
       const competencia = competencias.find((c) => c.id === competenciaId);
       if (competencia) {
@@ -111,7 +112,11 @@ const FormularioPrueba = () => {
         });
       }
     });
+    }
+    catch(e){
+    }
 
+    try{
     values.categorias.map((categoria, index)=>{
       if(categoria){
         const arreglo = []
@@ -127,6 +132,9 @@ const FormularioPrueba = () => {
         arregloCategorias.push(arreglo)
       }
     })
+    }catch(e){
+
+    }
 
     const body = {
       nombre: nombre,
